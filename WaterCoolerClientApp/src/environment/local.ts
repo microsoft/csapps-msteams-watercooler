@@ -1,0 +1,1 @@
+export const localBaseUrl = 'https://localhost:5001'

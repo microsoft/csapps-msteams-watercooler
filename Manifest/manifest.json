@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.5/MicrosoftTeams.schema.json",
+  "manifestVersion": "<<ManifestVersion>>",
+  "version": "<<Version>>",
+  "id": "<<ClientId>>",
+  "packageName": "com.microsoft.teams.watercooler",
+  "developer": {
+    "name": "<<Company name>>",
+    "websiteUrl": "<<https://WebsiteUrl>>",
+    "privacyUrl": "<<https://privacyUrl>>",
+    "termsOfUseUrl": "<<https://termsOfUseUrl>>"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "Water Cooler",
+    "full": "Water Cooler"
+  },
+  "description": {
+    "short": "Water Cooler is an app that enables user to create, invite and join conversations",
+    "full": "Water Cooler is a custom Teams app that enables users of a given Tenant to create, invite, and join casual conversations among teammates, like those that take place by the Watercooler or break room. This app provides a snapshot of all concurrent conversations that users are engaging on varied topics. The logged in user could join one of the active conversations or choose to spin up a new one on a specific topic, inviting up to 5 colleagues. Once a conversation is kicked off, following the Teams meeting feature, one could add more people or chat with the group."
+  },
+  "accentColor": "#64A2CC",
+  "staticTabs": [
+    {
+      "entityId": "watercooler",
+      "name": "Water Cooler",
+      "contentUrl": "<<https://UIappServiceURL>>",
+      "websiteUrl": "<<https://UIappServiceURL>>",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    
+  ],
+  "webApplicationInfo": {
+    "id": "<<ClientId>>",
+    "resource": "api://<<UI app Service URL>>/<<Client Id>>"
+  }
+}
