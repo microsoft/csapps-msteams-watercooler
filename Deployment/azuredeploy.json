@@ -1,0 +1,197 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseResourceName": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "The base name to use for the resources that will be provisioned."
+      }
+    },
+    "clientId": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "metadata": {
+        "description": "The client ID of the Azure AD app, e.g., 123e4567-e89b-12d3-a456-426655440000."
+      }
+    },
+    "clientSecret": {
+      "type": "securestring",
+      "minLength": 1,
+      "metadata": {
+        "description": "The client secret of the Azure AD app."
+      }
+    },
+    "botId": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "metadata": {
+        "description": "The Bot ID of the user bot Azure AD app, e.g., 123e4567-e89b-12d3-a456-426655440000."
+      }
+    },
+    "botSecret": {
+      "type": "securestring",
+      "minLength": 1,
+      "metadata": {
+        "description": "The bot secret of the user bot Azure AD app."
+      }
+    },
+    "userId": {
+      "type": "string",
+      "minLength": 36,
+      "metadata": {
+        "description": "User Id who will create the calls on behalf of the tenant."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 24,
+      "metadata": {
+        "description": "Storage account name."
+      }
+    },
+    "webApiEndpointName": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 60,
+      "metadata": {
+        "description": "Web api end point name"
+      }
+    },
+    "tenantId": {
+      "type": "string",
+      "defaultValue": "[subscription().tenantId]",
+      "minLength": 1,
+      "maxLength": 36,
+      "metadata": {
+        "description": "The ID of the tenant to which the app will be deployed."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "metadata": {
+        "description": "The SKU of App Service Plan."
+      }
+    }
+  },
+  "functions": [],
+  "variables": {
+    "storageName": "[concat(parameters('baseResourceName'), parameters('storageAccountName'))]",
+    "location": "[resourceGroup().location]",
+    "applicationIdUri": "[concat('api://', 'https://', parameters('webApiEndpointName'), '.azurewebsites.net', '/', parameters('clientId'))]",
+    "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webApiEndpointName'))]",
+    "gitRepoUrl": "https://github.com/srinivaskondisetty/armtemplate.git",
+    "gitBranch": "master"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2018-02-01",
+      "name": "[variables('appServicePlanPortalName')]",
+      "location": "[variables('location')]",
+      "sku": {
+        "name": "[parameters('sku')]"
+      },
+      "properties": {}
+    },
+    {
+      "name": "[variables('storageName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-01-01",
+      "tags": {
+        "displayName": "[variables('storageName')]"
+      },
+      "location": "[variables('location')]",
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      }
+    },
+    {
+      "apiVersion": "2018-11-01",
+      "type": "Microsoft.Web/sites",
+      "name": "[parameters('webApiEndpointName')]",
+      "location": "[variables('location')]",
+      "kind": "app",
+      "properties": {
+        "name": "[parameters('webApiEndpointName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
+        "enabled": true,
+        "reserved": false,
+        "clientAffinityEnabled": true,
+        "clientCertEnabled": false,
+        "hostNamesDisabled": false,
+        "containerSize": 0,
+        "dailyMemoryTimeQuota": 0,
+        "httpsOnly": true,
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "AzureAd:ClientId",
+              "value": "[parameters('clientId')]"
+            },
+            {
+              "name": "AzureAd:ApplicationIdURI",
+              "value": "[variables('applicationIdUri')]"
+            },
+            {
+              "name": "AzureAd:ClientSecret",
+              "value": "[parameters('clientSecret')]"
+            },
+            {
+              "name": "AzureAd:TenantId",
+              "value": "[parameters('tenantId')]"
+            },
+            {
+              "name": "Bot:AppId",
+              "value": "[parameters('botId')]"
+            },
+            {
+              "name": "Bot:AppSecret",
+              "value": "[parameters('botSecret')]"
+            },
+            {
+              "name": "Bot:BotBaseUrl",
+              "value": "[concat('https://',parameters('webApiEndpointName'), '.azurewebsites.net')]"
+            },
+            {
+              "name": "StorageAccountConnectionString",
+              "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')),'2015-05-01-preview').key1, ';EndpointSuffix=core.windows.net')]"
+            },
+            {
+              "name": "UserId",
+              "value": "[parameters('userId')]"
+            }
+          ]
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]"
+      ],
+      "resources": [
+        {
+          "condition": "[contains(variables('gitRepoUrl'),'http')]",
+          "type": "sourcecontrols",
+          "apiVersion": "2018-02-01",
+          "name": "web",
+          "location": "[variables('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('webApiEndpointName'))]"
+          ],
+          "properties": {
+            "repoUrl": "[variables('gitRepoUrl')]",
+            "branch": "[variables('gitBranch')]",
+            "isManualIntegration": true
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {}
+}
