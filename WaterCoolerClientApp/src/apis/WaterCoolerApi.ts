@@ -9,7 +9,7 @@ export interface IGraphResponse {
 let baseAxiosUrl = getBaseUrl() + '/api';
 
 export const getRoomList = async (): Promise<IRoomDetails[]> => {
-  let url = baseAxiosUrl + "/RoomData/GetActiveParticipantList";
+  let url = baseAxiosUrl + "/RoomData/GetActiveRoomsWithParticipants";
   const roomList = await axios.get(url);
   return roomList.data;
 }

@@ -72,24 +72,13 @@ namespace WaterCoolerAPI.Controllers
             this.roomLogoDataRepository = roomLogoDataRepository;
         }
 
-        /// <summary>
-        /// Returns the active rooms list.
-        /// </summary>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        [HttpGet]
-        [Route(HttpRouteConstants.GetActiveRoomList)]
-        public async Task<IEnumerable<RoomDataEntity>> GetRoomsListAsync()
-        {
-            var result = await this.roomDataRepository.GetActiveRoomsAsync();
-            return result;
-        }
 
         /// <summary>
         /// Returns the Active Participants List with User details.
         /// </summary>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
-        [Route(HttpRouteConstants.GetActiveParticipantList)]
+        [Route(HttpRouteConstants.GetActiveRoomsWithParticipants)]
         public async Task<List<ActiveRoomData>> GetActiveParticipantListAsync()
         {
             List<ActiveRoomData> activeRoomList = await this.activeRoomAndParticipantHelper.ActiveParticipantListAsync();
