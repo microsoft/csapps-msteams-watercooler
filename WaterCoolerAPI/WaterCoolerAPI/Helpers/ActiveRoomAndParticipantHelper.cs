@@ -3,6 +3,7 @@
 // </copyright>
 namespace WaterCoolerAPI.Helpers
 {
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace WaterCoolerAPI.Helpers
         /// <returns>Active Room Data along with User details.</returns>
         public async Task<List<ActiveRoomData>> ActiveParticipantListAsync()
         {
-            List<ActiveRoomData> activeRoomList = new List<ActiveRoomData>();
+            var activeRoomList = new ConcurrentBag<ActiveRoomData>();
             try
             {
                 var activeRooms = await this.roomDataRepository.GetActiveRoomsAsync();
@@ -52,7 +53,7 @@ namespace WaterCoolerAPI.Helpers
                     var graphServiceClient = await this.graph.GetGraphServiceClient();
                     if (sortedActiveResult != null)
                     {
-                        foreach (var room in sortedActiveResult)
+                        Parallel.ForEach(sortedActiveResult, room =>
                         {
                             ActiveRoomData activeRoomData = new ActiveRoomData();
                             activeRoomData.Name = room.Name;
@@ -67,43 +68,16 @@ namespace WaterCoolerAPI.Helpers
                             activeRoomData.ObjectId = room.ObjectId;
                             if (!string.IsNullOrEmpty(room.CallId))
                             {
-                                var participants = await this.graph.GetParticipants(graphServiceClient, room.CallId);
-                                if (participants != null)
-                                {
-                                    var activeParticipants = new List<ParticipantData>();
+                                var activeParticipants = this.GetParticipantListAsync(room.CallId);
 
-                                    foreach (var participant in participants)
-                                    {
-                                        if (participant != null && participant.Info != null && participant.Info.Identity != null && participant.Info.Identity.User != null)
-                                        {
-                                            var activeParticipantData = new ParticipantData();
-                                            activeParticipantData.Id = participant.Id;
-                                            activeParticipantData.DisplayName = participant.Info.Identity.User.DisplayName;
-
-                                            var userId = participant.Info.Identity.User.Id;
-                                            if (!string.IsNullOrEmpty(userId))
-                                            {
-                                                var userDetails = await this.graph.GetUserDetailsAsync(graphServiceClient, userId);
-                                                activeParticipantData.DisplayName = userDetails.DisplayName;
-                                                activeParticipantData.GivenName = userDetails.GivenName;
-                                                activeParticipantData.JobTitle = userDetails.JobTitle;
-                                                activeParticipantData.OfficeLocation = userDetails.OfficeLocation;
-                                                activeParticipantData.UserPrincipalName = userDetails.UserPrincipalName;
-                                                activeParticipantData.DisplayPicture = await this.graph.GetPhotoAsync(graphServiceClient, userId);
-                                                activeParticipants.Add(activeParticipantData);
-                                            }
-                                        }
-                                    }
-
-                                    activeRoomData.UserList = activeParticipants;
-                                }
+                                activeRoomData.UserList = activeParticipants.Result;
                             }
 
                             if (activeRoomData != null && activeRoomData.UserList != null && activeRoomData.UserList.Any())
                             {
                                 activeRoomList.Add(activeRoomData);
                             }
-                        }
+                        });
                     }
                 }
             }
@@ -112,7 +86,39 @@ namespace WaterCoolerAPI.Helpers
                 this.logger.LogError(ex, ex.Message);
             }
 
-            return activeRoomList;
+            return activeRoomList.OrderByDescending(a => a.StartDateTime).ToList();
+        }
+
+        /// <summary>
+        /// Get participants list
+        /// </summary>
+        /// <param name="callId">callId to get participants</param>
+        /// <returns>Returns participants lists</returns>
+        private async Task<List<ParticipantData>> GetParticipantListAsync(string callId)
+        {
+            var activeParticipants = new List<ParticipantData>();
+
+            if (callId != null)
+            {
+                var graphServiceClient = await this.graph.GetGraphServiceClient();
+                var participants = await this.graph.GetParticipants(graphServiceClient, callId);
+
+                if (participants != null)
+                {
+                    foreach (var participant in participants)
+                    {
+                        if (participant != null && participant.Info != null && participant.Info.Identity != null && participant.Info.Identity.User != null)
+                        {
+                            var activeParticipantData = new ParticipantData();
+                            activeParticipantData.DisplayName = participant.Info.Identity.User.DisplayName;
+                            activeParticipantData.UserId = participant.Info.Identity.User.Id;
+                            activeParticipants.Add(activeParticipantData);
+                        }
+                    }
+                }
+            }
+
+            return activeParticipants;
         }
     }
 }

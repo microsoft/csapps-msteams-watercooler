@@ -25,12 +25,9 @@ export interface IRoomDetails {
 }
 
 export interface IUsers {
+  userId: string,
   displayName: string,
-  givenName: string,
-  jobTitle: string,
-  officeLocation: string,
-  userPrincipalName: string,
-  displayPicture?: string
+  displayPicture: string
 }
 
 export interface ITaskinfo {

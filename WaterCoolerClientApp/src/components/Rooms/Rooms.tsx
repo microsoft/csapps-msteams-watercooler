@@ -5,6 +5,7 @@ import * as WConst from '../../WaterCoolerConstants';
 import * as microsoftTeams from "@microsoft/teams-js";
 import './Rooms.scss';
 import Timer from '../Timer/Timer';
+import UserDisplayPicture from '../UserDisplayPicture/UserDisplayPicture';
 import {user} from '../../apis/axiosJWTDecorator';
 
 export interface IRoomsProps {
@@ -31,12 +32,13 @@ class Rooms extends React.Component<IRoomsProps, IRoomsState> {
             primary
             size="small"
             onClick={() => this.joinMeeting(element.meetingUrl)}
-            disabled={element.userList?.some((users) => users.userPrincipalName === user.upn)}></Button>
+            disabled={element.userList?.some((users) => users.userId === user.oid)}></Button>
           <img src={element.logoUrl} className="avatar" />
           <div className="avatarGroupRooms">
             {element.userList?.map((elem, index) => {
               if (index < 6) {
-                return elem.displayPicture ? <img src={`data:image/jpeg;base64,` + elem.displayPicture} className="avatarGroupRoomImage" title={elem.displayName} /> : <div className="moreParticipants">{elem.displayName.match(/\b(\w)/g)?.join('')}</div>}
+                return <UserDisplayPicture userDetails={elem} key={elem.userId}/>
+              }
             })}
             {element.userList ? element.userList.length > 6 ? <div className="moreParticipants">+{element.userList?.length - 6}</div> : '' : ''}
           </div>

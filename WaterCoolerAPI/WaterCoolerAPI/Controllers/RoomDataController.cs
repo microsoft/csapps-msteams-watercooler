@@ -72,9 +72,8 @@ namespace WaterCoolerAPI.Controllers
             this.roomLogoDataRepository = roomLogoDataRepository;
         }
 
-
         /// <summary>
-        /// Returns the Active Participants List with User details.
+        /// Returns the Active rooms List with active participants.
         /// </summary>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]

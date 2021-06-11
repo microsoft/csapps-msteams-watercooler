@@ -108,45 +108,5 @@ namespace WaterCoolerAPI.Helpers
                 return null;
             }
         }
-
-        /// <inheritdoc/>
-        public async Task<User> GetUserDetailsAsync(GraphServiceClient graphServiceClient, string userId)
-        {
-            try
-            {
-                var user = await graphServiceClient.Users[userId].Request().GetAsync();
-                return user;
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, ex.Message);
-                return null;
-            }
-        }
-
-        /// <inheritdoc/>
-        public async Task<string> GetPhotoAsync(GraphServiceClient graphServiceClient, string userId)
-        {
-            try
-            {
-                var photoStream = await graphServiceClient.Users[userId].Photo.Content.Request().GetAsync();
-                if (photoStream != null)
-                {
-                    var bytes = new byte[(int)photoStream.Length];
-                    photoStream.Seek(0, SeekOrigin.Begin);
-                    photoStream.Read(bytes, 0, (int)photoStream.Length);
-                    string photoString = Convert.ToBase64String(bytes);
-
-                    return photoString;
-                }
-
-                return string.Empty;
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, ex.Message);
-                return string.Empty;
-            }
-        }
     }
 }

@@ -27,7 +27,7 @@ export const getUserList = async (payload: {}): Promise<IGraphResponse> => {
   let graphUrl = graphAPIUrl+ "/users/" + user.oid + "/people/?$search=" + payload;
 
   return fetch(graphUrl, {
-    headers: { "Authorization": "Bearer " + applicationAccessToken.data }
+    headers: { "Authorization": `Bearer ${applicationAccessToken.data}` }
   }).then(response => response.json());
 }
 
@@ -36,3 +36,22 @@ export const getRoomIcons = async (): Promise<IRoomIcons[]> => {
   const roomIcons = await axios.get(url);
   return roomIcons.data;
 }
+
+export const fetchMsGraphProfilePic = async (userId: string) => {
+  let url = baseAxiosUrl + "/RoomData/token";
+  const applicationAccessToken = await axios.get(url);
+
+  let graphUrl = graphAPIUrl + "/users/" + userId + "/photo/$value";
+
+  const requestHeaders = { Authorization: `Bearer ${applicationAccessToken.data}`, "Content-Type": "blob" };
+  const requestOptions = { method: "GET", headers: requestHeaders };
+  return await fetch(graphUrl, requestOptions).then(function (response) {
+    if (!response.ok) {
+      throw response;
+    } else {
+      return response.blob();
+    }
+  }).catch(function (err) {
+    throw err
+  });
+};

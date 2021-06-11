@@ -84,7 +84,7 @@
     "location": "[resourceGroup().location]",
     "applicationIdUri": "[concat('api://', 'https://', parameters('webApiEndpointName'), '.azurewebsites.net', '/', parameters('clientId'))]",
     "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webApiEndpointName'))]",
-    "gitRepoUrl": "https://github.com/srinivaskondisetty/armtemplate.git",
+    "gitRepoUrl": "https://github.com/microsoft/csapps-msteams-watercooler.git",
     "gitBranch": "master"
   },
   "resources": [

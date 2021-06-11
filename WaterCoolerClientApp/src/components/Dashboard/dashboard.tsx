@@ -34,7 +34,7 @@ class dashboard extends React.Component<{}, dashboardState> {
     this.getRoomList();
     this.interval = setInterval(() => {
       this.getRoomList();
-    }, 5000);
+    }, 8000);
   }
 
   // open modal for new room screen

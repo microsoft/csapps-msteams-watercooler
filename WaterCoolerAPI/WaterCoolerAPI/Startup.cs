@@ -5,6 +5,7 @@
 namespace WaterCoolerAPI
 {
     using System;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authentication.AzureAD.UI;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -31,12 +32,15 @@ namespace WaterCoolerAPI
     {
         private readonly GraphLogger logger;
 
+        private readonly IAzureBlobHelper azureBlobHelper;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Startup"/> class.
         /// </summary>
         /// <param name="configuration">IConfiguration instance.</param>
         public Startup(IConfiguration configuration)
         {
+            this.azureBlobHelper = azureBlobHelper;
             this.Configuration = configuration;
             this.logger = new GraphLogger(typeof(Startup).Assembly.GetName().Name);
         }
@@ -96,6 +100,7 @@ namespace WaterCoolerAPI
             services.AddSingleton<IGraph, GraphHelper>();
             services.AddSingleton<IActiveRoomAndParticipant, ActiveRoomAndParticipantHelper>();
             services.AddSingleton<IRoomLogoDataRepository, RoomLogoDataRepository>();
+            services.AddSingleton<IAzureBlobHelper, AzureBlobStorageHelper>();
             services.AddCors(options =>
             {
                 options.AddPolicy(
@@ -121,7 +126,7 @@ namespace WaterCoolerAPI
         /// </summary>
         /// <param name="app">IApplicationBuilder instance, which is a class that provides the mechanisms to configure an application's request pipeline.</param>
         /// <param name="env">IHostingEnvironment instance, which provides information about the web hosting environment an application is running in.</param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAzureBlobHelper blobHelper)
         {
             if (env.IsDevelopment())
             {
@@ -143,6 +148,15 @@ namespace WaterCoolerAPI
             {
                 endpoints.MapControllers();
             });
+
+            /// <summary>
+            /// Invoke the code for azure blob storage container creation and blob upload on app startup.
+            /// </summary>
+            bool containerExists = Task.Run(async () => await blobHelper.CheckOrCreateBlobContainer()).Result;
+            if (containerExists)
+            {
+                bool blobsUploaded= Task.Run(async () => await blobHelper.BlobUpload()).Result;
+            }
         }
     }
 }
