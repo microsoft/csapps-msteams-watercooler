@@ -141,7 +141,6 @@ Ex. https://%uiAppserviceName.scm.domain.com
 5. Set-up Authentication
 3.	Note that you have the %applicationId% from the previous step (Step 1).
 If do not have this value, refer this section of the Troubleshooting guide for steps to get these values.
->>Saikrishna/Naidu to create a Wiki page for Watercooler else remove this statement
 4.	Go to App Registrations page here and open the Water Cooler app you created (in Step 1) from the application list.
 5.	Under Manage, click on Authentication to bring up authentication settings.
 i.	Add a new entry to Redirect URIs:
@@ -227,7 +226,6 @@ o	"contentUrl": https://yourappdomain.azurewebsites.net/,
 o	"websiteUrl": "https://yourappdomain.azurewebsites.net/",
 
 6.	Change the <<clientId>> placeholder in the id setting of the webApplicationInfo section to be the %clientId% value. Change the <<appDomain>> placeholder in the resource setting of the webApplicationInfo section to be the %appDomain% value e.g. "api://appname.azurewebsites.net/clientId".
->>Confirm if same format for web app info section is present in the mainfest
 7.	Create a ZIP package with the  manifest.json, color.png, and outline.png. The two image files are the icons for your app in Teams.
 o	Name this package  manifest.zip, so you know that this is the app for the Water Cooler.
 o	Make sure that the 3 files are the top level of the ZIP package, with no nested folders.
