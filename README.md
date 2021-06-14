@@ -25,6 +25,7 @@ The app provides an easy interface for anyone to find an existing conversation o
 
 ## Architecture
 ![Architecture](Wiki/Images/architecture.png)
+
 The __Water Cooler__ app has the following main components:
 * __App Service (API)__: The API app service will provide the API endpoints to get the Rooms Data, its participants, and to Add a New Room. 
 * __App Service (UI)__: The UI app service will display the Rooms and the participants in the room. 
@@ -88,9 +89,10 @@ User.Read.All | Read all users profile.
        ![Client Secret](Wiki/Images/clientSecret.png)
     6. Once the client secret is created, copy its __Value__; we will need it later. At this point you 
        should have the following 3 values. 
-       1. Application (client) ID for the Water Cooler bot.
-       2. Client secret for the Water Cooler bot.
+       1. Application (client) ID for the Water Cooler app.
+       2. Client secret for the Water Cooler app.
        3. Directory (tenant) ID.
+
        ![App Data](Wiki/Images/appData.png)
 
 2. __Set-up Bot__
@@ -100,10 +102,12 @@ User.Read.All | Read all users profile.
     3. Fill your client app id or password or auto generate. (We recommend to use app Id and password).
        ![Bit App ID](Wiki/Images/botAppId.png)
     4. Go to Channels from left tray.
+
        ![Channels](Wiki/Images/channels.png)
     5. Setup Microsoft Teams in channels
        ![Connect Channels](Wiki/Images/connectChannels.png)
     6. Setup Calling in channel.
+
        ![Bot calling](Wiki/Images/botCalling.png)
 
 3. __Deploy your Azure subscription__
