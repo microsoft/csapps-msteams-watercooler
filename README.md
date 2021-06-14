@@ -106,7 +106,7 @@ User.Read.All | Read all users profile.
        ![Channels](Wiki/Images/channels.png)
     5. Setup Microsoft Teams in channels
        ![Connect Channels](Wiki/Images/connectChannels.png)
-    6. Setup Calling in channel. Add the Url in given format. https://%apiAppServiceUrl/callback/calling
+    6. Setup Calling in channel. Add the Url in given format. https://%apiAppServiceUrl%/callback/calling
 
        ![Bot calling](Wiki/Images/botCalling.png)
 
@@ -170,7 +170,7 @@ User.Read.All | Read all users profile.
     2. Click on create, the below interface will appear. Fill the appropriate details and create.
        ![UI App service](Wiki/Images/uiAppService.png)
     3. After creating UI App service go to App service overview page.
-    4. Copy UI App service URL and edit as shown Ex. https://%uiAppserviceName.scm.domain.com
+    4. Copy UI App service URL and edit as shown Ex. https://%uiAppserviceName%.scm.domain.com
     5. Open this URL in browser and go to Tools > ZIP push deploy
        ![Zip Deploy](Wiki/Images/zipDeploy.png)
     6. Make sure you have cloned the repository. Open cmd, go to waterCoolerClientApp directory.
@@ -188,12 +188,12 @@ User.Read.All | Read all users profile.
    2. Under __Manage__, click on __Authentication__ to bring up authentication settings.
       1. Add a new entry to __Redirect URIs__:
          1. __Type__: Web
-         2. __Redirect URI__: Enter  https://%clientAppServiceURl%/auth-end for the URL e.g. https://WaterCoolerdevui.azurewebsites.net/auth-end (client app service)
+         2. __Redirect URI__: Enter  https://%clientAppServiceUrl%/auth-end for the URL e.g. https://yourappdomain.net/auth-end (client app service)
       2. Under __Implicit grant__, check __ID tokens__.
       3. Click __Save__ to commit your changes.
    3. Back under __Manage__, click on __Expose an API__.
-      1. Click on the __Set__ link next to __Application ID URI__, and change the value to  api://%clientAppServiceURL%/clientId,
-e.g. api://WaterCoolerdevui.azurewebsites.net/clientId.
+      1. Click on the __Set__ link next to __Application ID URI__, and change the value to  api://%clientAppServiceUrl%/clientId,
+e.g. api://yourappdomain.net/clientId.
       2. Click __Save__ to commit your changes.
       3. Click on __Add a scope__, under __Scopes defined by this API__. In the flyout that appears, enter the following values:
          1. __Scope name__:  access_as_user
