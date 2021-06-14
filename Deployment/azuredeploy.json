@@ -54,12 +54,20 @@
         "description": "Storage account name."
       }
     },
-    "webApiEndpointName": {
+    "webApiUrl": {
       "type": "string",
       "minLength": 2,
       "maxLength": 60,
       "metadata": {
-        "description": "Web api end point name"
+        "description": "Web api Url"
+      }
+    },
+    "webUiUrl": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 60,
+      "metadata": {
+        "description": "Web Ui Url"
       }
     },
     "tenantId": {
@@ -82,8 +90,8 @@
   "variables": {
     "storageName": "[concat(parameters('baseResourceName'), parameters('storageAccountName'))]",
     "location": "[resourceGroup().location]",
-    "applicationIdUri": "[concat('api://', 'https://', parameters('webApiEndpointName'), '.azurewebsites.net', '/', parameters('clientId'))]",
-    "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webApiEndpointName'))]",
+    "applicationIdUri": "[concat('api://', parameters('webUiUrl'), '.azurewebsites.net', '/', parameters('clientId'))]",
+    "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('webApiUrl'))]",
     "gitRepoUrl": "https://github.com/microsoft/csapps-msteams-watercooler.git",
     "gitBranch": "main"
   },
@@ -110,16 +118,19 @@
       "sku": {
         "name": "Standard_LRS",
         "tier": "Standard"
+      },
+      "properties": {
+        "allowBlobPublicAccess": true
       }
     },
     {
       "apiVersion": "2018-11-01",
       "type": "Microsoft.Web/sites",
-      "name": "[parameters('webApiEndpointName')]",
+      "name": "[parameters('webApiUrl')]",
       "location": "[variables('location')]",
       "kind": "app",
       "properties": {
-        "name": "[parameters('webApiEndpointName')]",
+        "name": "[parameters('webApiUrl')]",
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanPortalName'))]",
         "enabled": true,
         "reserved": false,
@@ -157,7 +168,7 @@
             },
             {
               "name": "Bot:BotBaseUrl",
-              "value": "[concat('https://',parameters('webApiEndpointName'), '.azurewebsites.net')]"
+              "value": "[concat('https://',parameters('webApiUrl'), '.azurewebsites.net')]"
             },
             {
               "name": "StorageAccountConnectionString",
@@ -166,6 +177,10 @@
             {
               "name": "UserId",
               "value": "[parameters('userId')]"
+            },
+            {
+              "name": "BlobContainerName",
+              "value": "roomicons"
             }
           ]
         }
@@ -182,7 +197,7 @@
           "name": "web",
           "location": "[variables('location')]",
           "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', parameters('webApiEndpointName'))]"
+            "[resourceId('Microsoft.Web/sites', parameters('webApiUrl'))]"
           ],
           "properties": {
             "repoUrl": "[variables('gitRepoUrl')]",
