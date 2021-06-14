@@ -106,7 +106,7 @@ User.Read.All | Read all users profile.
        ![Channels](Wiki/Images/channels.png)
     5. Setup Microsoft Teams in channels
        ![Connect Channels](Wiki/Images/connectChannels.png)
-    6. Setup Calling in channel.
+    6. Setup Calling in channel. Add the Url in given format. https://%apiAppServiceUrl/callback/calling
 
        ![Bot calling](Wiki/Images/botCalling.png)
 
@@ -147,8 +147,9 @@ User.Read.All | Read all users profile.
        7. __User Id__: You need to provide the Admin User Id, who will initiate the calls in the application on 
           behalf.
        8. __Storage Account Name__: The Azure storage table name.
-       9. __Web API Endpoint name__: The app service name for the backend deployment.
-       10. __SKU__: The app service plan. Basically the values are F1 (Free), D1 (Shared), B1, B2, B3 
+       9. __Web API Url__: The app service name for the backend deployment.
+       10. __Web UI Url__: The app service name for the frontend deployment.
+       11. __SKU__: The app service plan. Basically the values are F1 (Free), D1 (Shared), B1, B2, B3 
            (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans)etc. You can 
            check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/)
 
