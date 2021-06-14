@@ -278,6 +278,12 @@ Alternatively you may follow the steps below:
    1. Install the Water Cooler app (the  manifest.zip package) with the tenant scope
    2. Install the app (the manifest.zip package) to the users and teams that will be the target audience.
 
+10. __Upload room icons to blob storage__
+    1. Open the created storage in the Resource group.
+    2. Click on Storage explorer > Blob containers.
+    3. Click on upload and upload the icons for room as shown below.
+       ![Blob Upload](Wiki/Images/blobUpload.png)
+    
 #### IMPORTANT
    Proactive app installation will work only if you upload the app to your tenant's app catalog. Install the app (the manifest.zip package) to the users and teams that will be the target audience.
 
