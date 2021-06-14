@@ -148,7 +148,7 @@ User.Read.All | Read all users profile.
           behalf.
        8. __Storage Account Name__: The Azure storage table name.
        9. __Web API Url__: The app service name for the backend deployment.
-       10. __Web UI Url__: The app service name for the frontend deployment.
+       10. __Web UI Url__: The app service name for the frontend deployment (Keep this name safe, we will need it while creating app service for UI).
        11. __SKU__: The app service plan. Basically the values are F1 (Free), D1 (Shared), B1, B2, B3 
            (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans)etc. You can 
            check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/)
