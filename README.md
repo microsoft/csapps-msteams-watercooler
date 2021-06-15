@@ -6,7 +6,7 @@ sample        | csharp  | office-teams | Water Cooler is a custom Teams app that
 
 Water Cooler is a custom Teams app that enables corporate teams to create, invite, and join casual conversations among teammates, like those that take place by the Water Cooler or break room. Use this template for multiple scenarios, such as new non-project related announcements, topics of interest, current events, or conversations about hobbies.
 
-The app provides an easy interface for anyone to find an existing conversation or start a new one. It's a foundation for building custom targeted communication capabilities, promoting interaction amongst coworkers who may otherwise not get a chance to socialize during breaks
+The app provides an easy interface for anyone to find an existing conversation or start a new one. It's a foundation for building custom targeted communication capabilities, promoting interaction amongst coworkers who may otherwise not get a chance to socialize during breaks.
 
 ## Key features
 
@@ -33,10 +33,10 @@ The __Water Cooler__ app has the following main components:
 * __App Service (API)__: The API app service will provide the API endpoints to get the Rooms Data, its participants, and to Add a New Room. 
 * __App Service (UI)__: The UI app service will display the Rooms and the participants in the room. 
 * __Azure Storage__: Azure Storage tables will store the Room Data and the participants information in the tables.
-* __Microsoft Graph API__: The app leverages Microsoft graph APIs to [List Participants](https://docs.microsoft.com/en-us/graph/api/call-list-participants?view=graph-rest-1.0&tabs=http), [Get User Profile](https://docs.microsoft.com/en-us/graph/api/profile-get?view=graph-rest-beta&tabs=http)
+* __Microsoft Graph API__: The app leverages Microsoft graph APIs to [List Participants](https://docs.microsoft.com/en-us/graph/api/call-list-participants?view=graph-rest-1.0&tabs=http), [Get User Profile.](https://docs.microsoft.com/en-us/graph/api/profile-get?view=graph-rest-beta&tabs=http)
 
 ## App Service
-The app service implements two main concepts, Endpoints for displaying the calls and a scheduler job for updating the participant info
+The app service implements two main concepts, Endpoints for displaying the calls and a scheduler job for updating the participant info.
 
 #### API Endpoint
 The end point will return all the active rooms by checking the azure storage tables. The azure storage tables will provide all active rooms. By utilizing the graph API, we will get the active participants in the call and return it data back to the UI. All these methods will be implemented using parallel async calls.
@@ -45,7 +45,7 @@ The end point will return all the active rooms by checking the azure storage tab
 The scheduler will run for specified time and update database with the following things. It will loop through all the active calls and get the desired information from graph and based on the database records it will update or insert the records. E.g.: Currently there are 4 active users in the room. When the scheduler runs for the first time it will insert all 4 records. In next scheduler event we have a new participant in the call it will check for the change and as the new user is there it will insert the data. If any other user dropped off it will update the meeting end time for the user.
 
 #### UI
-The UI will fetch all the rooms and participants from the above-mentioned API and display the tiles information. The tile will have the Room name, description, participants list and a button to join the call. If the user is part of the call the join button will be displayed. Apart from that the first will be fixed and it will have the create new room button. On click on the button will open a dialog box with Room Name, Description and Participants list. After saving the Room a new call will be initiated. Bot will join the call and it will call other users who are invited initially. The UI application will continuously the poll the API to get the latest rooms information.
+The UI will fetch all the rooms and participants from the above-mentioned API and display the tiles information. The tile will have the Room name, description, participants list and a button to join the call. If the user is part of the call the join button will be displayed. Apart from that the first will be fixed and it will have the create new room button. Click on the button to open the dialog box with Room Name, Description and Participants list. After saving the Room a new call will be initiated. Bot will join the call and it will call other users who are invited initially. The UI application will continuously the poll the API to get the latest rooms information.
 
 ## Microsoft Graph API
 #### Delegated Permissions
@@ -53,7 +53,7 @@ App service requires the following Delegated Permission:
 
 Delegated Permission | Use Case|
 ------------- | ------------- |
-User.Read | In order to read the profile information of the logged in user
+User.Read | In order to read the profile information of the logged in user.
 
 #### Application Permissions
 App service requires the following Application Permissions:
@@ -77,7 +77,7 @@ User.Read.All | Read all users profile.
     2. Click __New registration__ to create an Azure AD application.
        1. __Name__: Name of your Teams App - if you are following the template for a default deployment, we 
           recommend "Water Cooler".
-       2. __Supported account types__: Select "Accounts in any organizational directory" (refer image 
+       2. __Supported account types__: Select "Accounts in any organizational directory" (refer to image 
           below).
        3. Leave the "Redirect URI" field blank for now.
 
@@ -85,7 +85,7 @@ User.Read.All | Read all users profile.
     3. Click __Register__ to complete the registration.
     4. When the app is registered, you'll be taken to the app's "Overview" page. Copy the __Application 
        (client) ID__; we will need it later. Verify that the "Supported account types" is set to __Multiple 
-       organizations__
+       organizations.__
 
        ![Client ID](Wiki/Images/clientId.png)
     5. On the side rail in the Manage section, navigate to the "Certificates & secrets" section. In the 
@@ -106,7 +106,7 @@ User.Read.All | Read all users profile.
     2. Fill appropriate details to create the bot.
 
        ![Bot Registration](Wiki/Images/botRegistration.png)
-    3. Click on create new and fill your client app id and password. (We recommend to use app Id and password, you can get it from step 1).
+    3. Before you create, at the bottom of the page Click on 'Microsoft App ID and Password' (we don't want to use auto create). On the next screen, click 'Create New' and paste in the same Client ID and Secret you created in the step 1.
 
        ![Bit App ID](Wiki/Images/botAppId.png)
     4. Go to Channels from left tray.
@@ -146,16 +146,14 @@ User.Read.All | Read all users profile.
           ClientId as same values
        5. __Bot Secret__: The created Bot Secret. If you create the ClientId as Bot Id then you can also keep 
           the client secret as Bot Secret.
-       6. __Base Resource Name__: It will give a prefix to your resources. So those duplicates and deployments 
-          failures will be eradicated.
-       7. __User Id__: You need to provide the Admin User Id, who will initiate the calls in the application on 
-          behalf.
-       8. __Storage Account Name__: The Azure storage table name.
-       9. __Web API Url__: The app service name for the backend deployment.
-       10. __Web UI Url__: The app service name for the frontend deployment (Keep this name safe, we will need it while creating app service for UI).
+       6. __Base Resource Name__: You need to think of a name here, keep it under 12 characters and all lower-case.
+       7. __User Id__: This is the Azure AD GUID for the user account you want to run the application as. It just needs to be a regular AD account, no special licencing or permissions.
+       8. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.
+       9. __Web API Url__: Think of a name for your backend app service (e.g. watercoolerwebapi) - write this down as you'll need it later.
+       10. __Web UI Url__: Think of a name for your frontend app service (e.g. watercoolerwebui) - write this down as you'll need it later.
        11. __SKU__: The app service plan. Basically the values are F1 (Free), D1 (Shared), B1, B2, B3 
-           (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans)etc. You can 
-           check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). E.g. S1
+           (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans), etc., You can 
+           check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). e.g. S1.
 
        __Note__: Make sure that the values are copied as-is, with no extra spaces. The template checks that GUIDs are exactly 36 
        characters.
@@ -167,7 +165,7 @@ User.Read.All | Read all users profile.
        the bottom of the page.
     9. Click on "Agree & Create" to validate the template. It will validate the template and will provide create button if everything is 
        good. Click on Create to start the deployment.
-    10. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It may take __up to an hour__ for the deployment to finish
+    10. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It may take __up to an hour__ for the deployment to finish.
     11. Get the URL value from the Web API App Service that is provisioned. Copy that value to clipboard for use next (and later).
         1. Go to: Home -> Bot Services -> Your Bot -> Channels -> Microsoft Teams (edit) -> Calling tab -> Tick ‘Enable Calling’ -> create Webhook like example here: __https://yourwebapiurl.azurewebsites.net/callback/calling__
         2. Click Save
@@ -181,28 +179,28 @@ User.Read.All | Read all users profile.
 
        ![UI App service](Wiki/Images/uiAppService.png)
     3. After creating UI App service go to App service overview page.
-    4. Copy UI App service URL and save to clipboard
-    5. Then edit the URL as shown below (you need to add ‘scm’ into the URL as shown
-       E.g. https://%uiAppservicename%.scm.azurewebsites.net
+    4. Copy UI App service URL and save to clipboard.
+    5. Then edit the URL as shown below (you need to add ‘scm’ into the URL as shown. 
+       e.g. https://%uiAppservicename%.scm.azurewebsites.net
 
     6. Open this URL in browser and go to Tools > ZIP push deploy
 
        ![Zip Deploy](Wiki/Images/zipDeploy.png)
-    7. Make sure you have cloned or Downloaded the repository. (You can do this from the Git repository and download the .Zip file.
-    8. Extract the contents to your local machine
-    9. Open cmd, go to the waterCoolerClientApp directory
-    10. Open file explorer and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL)
+    7. Make sure you have cloned or Downloaded the repository. (You can do this from the Git repository and download the .Zip file).
+    8. Extract the contents to your local machine.
+    9. Open cmd, go to the waterCoolerClientApp directory.
+    10. Open file explorer and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL).
     11. Save development.ts
-    12. BUILD the UI App
-    13. Go back to CMD you have open (you need to be in the waterCoolerClientApp directory)
-    14. Run the command as below (If this doesn’t work – you’ll need to install Node.JS)
+    12. Now we're going to Build the UI app.
+    13. Start by going back to the Command Prompt (CMD) window you opened earlier (you need to be int he waterCoolerClientApp director).
+    14. Run the command as below (If this doesn’t work – you’ll need to install Node.JS).
         ```python
         npm install
     15. Write the command as below
         ```python
         npm run-script build
     16. Go to the ‘build’ folder and Zip the entire contents and upload in the window opened in step 5.
-    17. Tip: You upload by dragging the .zip package onto the browser window
+    17. Tip: You upload by dragging the .zip package onto the browser window:
 
         ![Drop to deploy](Wiki/Images/dropDeploy.png)
     18. You can check this has worked by going to: https://%webuiurl% and you should see the Loading screen (it will stay like this)
@@ -315,7 +313,7 @@ Alternatively you may follow the steps below:
 
 10. __Upload room icons to blob storage__
     1. Open the created storage in the Resource group.
-    2. Click on Storage explorer > Blob containers.
+    2. Click on Storage explorer -> Blob containers.
     3. Click on upload and upload the icons for room as shown below.
 
        ![Blob Upload](Wiki/Images/blobUpload.png)
