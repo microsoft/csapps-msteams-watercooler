@@ -36,7 +36,7 @@ The __Water Cooler__ app has the following main components:
 * __Microsoft Graph API__: The app leverages Microsoft graph APIs to [List Participants](https://docs.microsoft.com/en-us/graph/api/call-list-participants?view=graph-rest-1.0&tabs=http), [Get User Profile](https://docs.microsoft.com/en-us/graph/api/profile-get?view=graph-rest-beta&tabs=http)
 
 ## App Service
-The app service implements two main concepts, Endpoints for displaying the calls and a scheduler job for updating the participant info
+The app service implements two main concepts, Endpoints for displaying the calls and a scheduler job for updating the participant info.
 
 #### API Endpoint
 The end point will return all the active rooms by checking the azure storage tables. The azure storage tables will provide all active rooms. By utilizing the graph API, we will get the active participants in the call and return it data back to the UI. All these methods will be implemented using parallel async calls.
