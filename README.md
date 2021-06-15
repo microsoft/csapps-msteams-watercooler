@@ -85,7 +85,7 @@ User.Read.All | Read all users profile.
     3. Click __Register__ to complete the registration.
     4. When the app is registered, you'll be taken to the app's "Overview" page. Copy the __Application 
        (client) ID__; we will need it later. Verify that the "Supported account types" is set to __Multiple 
-       organizations__
+       organizations.__
 
        ![Client ID](Wiki/Images/clientId.png)
     5. On the side rail in the Manage section, navigate to the "Certificates & secrets" section. In the 
@@ -152,8 +152,8 @@ User.Read.All | Read all users profile.
        9. __Web API Url__: Think of a name for your backend app service (e.g. watercoolerwebapi) - write this down as you'll need it later.
        10. __Web UI Url__: Think of a name for your frontend app service (e.g. watercoolerwebui) - write this down as you'll need it later.
        11. __SKU__: The app service plan. Basically the values are F1 (Free), D1 (Shared), B1, B2, B3 
-           (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans)etc. You can 
-           check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). E.g. S1
+           (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans), etc., You can 
+           check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). e.g. S1.
 
        __Note__: Make sure that the values are copied as-is, with no extra spaces. The template checks that GUIDs are exactly 36 
        characters.
@@ -165,7 +165,7 @@ User.Read.All | Read all users profile.
        the bottom of the page.
     9. Click on "Agree & Create" to validate the template. It will validate the template and will provide create button if everything is 
        good. Click on Create to start the deployment.
-    10. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It may take __up to an hour__ for the deployment to finish
+    10. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It may take __up to an hour__ for the deployment to finish.
     11. Get the URL value from the Web API App Service that is provisioned. Copy that value to clipboard for use next (and later).
         1. Go to: Home -> Bot Services -> Your Bot -> Channels -> Microsoft Teams (edit) -> Calling tab -> Tick ‘Enable Calling’ -> create Webhook like example here: __https://yourwebapiurl.azurewebsites.net/callback/calling__
         2. Click Save
@@ -179,28 +179,28 @@ User.Read.All | Read all users profile.
 
        ![UI App service](Wiki/Images/uiAppService.png)
     3. After creating UI App service go to App service overview page.
-    4. Copy UI App service URL and save to clipboard
-    5. Then edit the URL as shown below (you need to add ‘scm’ into the URL as shown
-       E.g.) https://%uiAppservicename%.scm.azurewebsites.net
+    4. Copy UI App service URL and save to clipboard.
+    5. Then edit the URL as shown below (you need to add ‘scm’ into the URL as shown. 
+       e.g. https://%uiAppservicename%.scm.azurewebsites.net
 
     6. Open this URL in browser and go to Tools > ZIP push deploy
 
        ![Zip Deploy](Wiki/Images/zipDeploy.png)
     7. Make sure you have cloned or Downloaded the repository. (You can do this from the Git repository and download the .Zip file).
-    8. Extract the contents to your local machine
-    9. Open cmd, go to the waterCoolerClientApp directory
-    10. Open file explorer and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL)
+    8. Extract the contents to your local machine.
+    9. Open cmd, go to the waterCoolerClientApp directory.
+    10. Open file explorer and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL).
     11. Save development.ts
     12. Now we're going to Build the UI app.
     13. Start by going back to the Command Prompt (CMD) window you opened earlier (you need to be int he waterCoolerClientApp director).
-    14. Run the command as below (If this doesn’t work – you’ll need to install Node.JS)
+    14. Run the command as below (If this doesn’t work – you’ll need to install Node.JS).
         ```python
         npm install
     15. Write the command as below
         ```python
         npm run-script build
     16. Go to the ‘build’ folder and Zip the entire contents and upload in the window opened in step 5.
-    17. Tip: You upload by dragging the .zip package onto the browser window
+    17. Tip: You upload by dragging the .zip package onto the browser window:
 
         ![Drop to deploy](Wiki/Images/dropDeploy.png)
     18. You can check this has worked by going to: https://%webuiurl% and you should see the Loading screen (it will stay like this)
@@ -313,7 +313,7 @@ Alternatively you may follow the steps below:
 
 10. __Upload room icons to blob storage__
     1. Open the created storage in the Resource group.
-    2. Click on Storage explorer > Blob containers.
+    2. Click on Storage explorer -> Blob containers.
     3. Click on upload and upload the icons for room as shown below.
 
        ![Blob Upload](Wiki/Images/blobUpload.png)
