@@ -33,7 +33,7 @@ The __Water Cooler__ app has the following main components:
 * __App Service (API)__: The API app service will provide the API endpoints to get the Rooms Data, its participants, and to Add a New Room. 
 * __App Service (UI)__: The UI app service will display the Rooms and the participants in the room. 
 * __Azure Storage__: Azure Storage tables will store the Room Data and the participants information in the tables.
-* __Microsoft Graph API__: The app leverages Microsoft graph APIs to [List Participants](https://docs.microsoft.com/en-us/graph/api/call-list-participants?view=graph-rest-1.0&tabs=http), [Get User Profile](https://docs.microsoft.com/en-us/graph/api/profile-get?view=graph-rest-beta&tabs=http)
+* __Microsoft Graph API__: The app leverages Microsoft graph APIs to [List Participants](https://docs.microsoft.com/en-us/graph/api/call-list-participants?view=graph-rest-1.0&tabs=http), [Get User Profile.](https://docs.microsoft.com/en-us/graph/api/profile-get?view=graph-rest-beta&tabs=http)
 
 ## App Service
 The app service implements two main concepts, Endpoints for displaying the calls and a scheduler job for updating the participant info.
@@ -45,7 +45,7 @@ The end point will return all the active rooms by checking the azure storage tab
 The scheduler will run for specified time and update database with the following things. It will loop through all the active calls and get the desired information from graph and based on the database records it will update or insert the records. E.g.: Currently there are 4 active users in the room. When the scheduler runs for the first time it will insert all 4 records. In next scheduler event we have a new participant in the call it will check for the change and as the new user is there it will insert the data. If any other user dropped off it will update the meeting end time for the user.
 
 #### UI
-The UI will fetch all the rooms and participants from the above-mentioned API and display the tiles information. The tile will have the Room name, description, participants list and a button to join the call. If the user is part of the call the join button will be displayed. Apart from that the first will be fixed and it will have the create new room button. On click on the button will open a dialog box with Room Name, Description and Participants list. After saving the Room a new call will be initiated. Bot will join the call and it will call other users who are invited initially. The UI application will continuously the poll the API to get the latest rooms information.
+The UI will fetch all the rooms and participants from the above-mentioned API and display the tiles information. The tile will have the Room name, description, participants list and a button to join the call. If the user is part of the call the join button will be displayed. Apart from that the first will be fixed and it will have the create new room button. "Click on the button to" open the dialog box with Room Name, Description and Participants list. After saving the Room a new call will be initiated. Bot will join the call and it will call other users who are invited initially. The UI application will continuously the poll the API to get the latest rooms information.
 
 ## Microsoft Graph API
 #### Delegated Permissions
@@ -53,7 +53,7 @@ App service requires the following Delegated Permission:
 
 Delegated Permission | Use Case|
 ------------- | ------------- |
-User.Read | In order to read the profile information of the logged in user
+User.Read | In order to read the profile information of the logged in user.
 
 #### Application Permissions
 App service requires the following Application Permissions:
@@ -77,7 +77,7 @@ User.Read.All | Read all users profile.
     2. Click __New registration__ to create an Azure AD application.
        1. __Name__: Name of your Teams App - if you are following the template for a default deployment, we 
           recommend "Water Cooler".
-       2. __Supported account types__: Select "Accounts in any organizational directory" (refer image 
+       2. __Supported account types__: Select "Accounts in any organizational directory" (refer to image 
           below).
        3. Leave the "Redirect URI" field blank for now.
 
