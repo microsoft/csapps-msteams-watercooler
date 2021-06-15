@@ -106,7 +106,7 @@ User.Read.All | Read all users profile.
     2. Fill appropriate details to create the bot.
 
        ![Bot Registration](Wiki/Images/botRegistration.png)
-    3. Click on create new and fill your client app id and password. (We recommend to use app Id and password, you can get it from step 1).
+    3. Before you create, at the bottom of the page Click on 'Microsoft App ID and Password' (we don't want to use auto create). On the next screen, click 'Create New' and paste in the same Client ID and Secret you created in the step 1.
 
        ![Bit App ID](Wiki/Images/botAppId.png)
     4. Go to Channels from left tray.
@@ -146,13 +146,11 @@ User.Read.All | Read all users profile.
           ClientId as same values
        5. __Bot Secret__: The created Bot Secret. If you create the ClientId as Bot Id then you can also keep 
           the client secret as Bot Secret.
-       6. __Base Resource Name__: It will give a prefix to your resources. So those duplicates and deployments 
-          failures will be eradicated.
-       7. __User Id__: You need to provide the Admin User Id, who will initiate the calls in the application on 
-          behalf.
-       8. __Storage Account Name__: The Azure storage table name.
-       9. __Web API Url__: The app service name for the backend deployment.
-       10. __Web UI Url__: The app service name for the frontend deployment (Keep this name safe, we will need it while creating app service for UI).
+       6. __Base Resource Name__: You need to think of a name here, keep it under 12 characters and all lower-case.
+       7. __User Id__: This is the Azure AD GUID for the user account you want to run the application as. It just needs to be a regular AD account, no special licencing or permissions.
+       8. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.
+       9. __Web API Url__: Think of a name for your backend app service (e.g. watercoolerwebapi) - write this down as you'll need it later.
+       10. __Web UI Url__: Think of a name for your frontend app service (e.g. watercoolerwebui) - write this down as you'll need it later.
        11. __SKU__: The app service plan. Basically the values are F1 (Free), D1 (Shared), B1, B2, B3 
            (Basic), S1, S2, S3 (Standard plans), P1v2, P2v2, P3v2 (Premium V2 service plans)etc. You can 
            check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). E.g. S1
@@ -183,18 +181,18 @@ User.Read.All | Read all users profile.
     3. After creating UI App service go to App service overview page.
     4. Copy UI App service URL and save to clipboard
     5. Then edit the URL as shown below (you need to add ‘scm’ into the URL as shown
-       E.g. https://%uiAppservicename%.scm.azurewebsites.net
+       E.g.) https://%uiAppservicename%.scm.azurewebsites.net
 
     6. Open this URL in browser and go to Tools > ZIP push deploy
 
        ![Zip Deploy](Wiki/Images/zipDeploy.png)
-    7. Make sure you have cloned or Downloaded the repository. (You can do this from the Git repository and download the .Zip file.
+    7. Make sure you have cloned or Downloaded the repository. (You can do this from the Git repository and download the .Zip file).
     8. Extract the contents to your local machine
     9. Open cmd, go to the waterCoolerClientApp directory
     10. Open file explorer and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL)
     11. Save development.ts
-    12. BUILD the UI App
-    13. Go back to CMD you have open (you need to be in the waterCoolerClientApp directory)
+    12. Now we're going to Build the UI app.
+    13. Start by going back to the Command Prompt (CMD) window you opened earlier (you need to be int he waterCoolerClientApp director).
     14. Run the command as below (If this doesn’t work – you’ll need to install Node.JS)
         ```python
         npm install
