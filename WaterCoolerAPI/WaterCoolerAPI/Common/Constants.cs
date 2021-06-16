@@ -243,5 +243,10 @@ namespace WaterCoolerAPI.Common
         /// get the user id key.
         /// </summary>
         public const string UserIdConfigurationSettingsKey = "UserId";
+
+        /// <summary>
+        /// get the Active Room Data cache key.
+        /// </summary>
+        public const string ActiveRoomData = "ActiveRoomData";
     }
 }
