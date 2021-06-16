@@ -4,6 +4,7 @@
 
 namespace WaterCoolerAPI.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
@@ -12,6 +13,7 @@ namespace WaterCoolerAPI.Controllers
     using Microsoft.AspNetCore.Cors;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Primitives;
     using Newtonsoft.Json;
@@ -33,6 +35,7 @@ namespace WaterCoolerAPI.Controllers
     public class RoomDataController : ControllerBase
     {
         private readonly IRoomDataRepository roomDataRepository;
+        private readonly IDistributedCache cache;
         private readonly TableRowKeyGenerator tableRowKeyGenerator;
         private readonly ILogger<RoomDataController> logger;
         private readonly IGraph graph;
@@ -60,7 +63,8 @@ namespace WaterCoolerAPI.Controllers
             IHttpContextAccessor httpContextAccessor,
             Bot bot,
             IActiveRoomAndParticipant activeRoomAndParticipantHelper,
-            IRoomLogoDataRepository roomLogoDataRepository)
+            IRoomLogoDataRepository roomLogoDataRepository,
+            IDistributedCache cache)
         {
             this.roomDataRepository = roomDataRepository;
             this.tableRowKeyGenerator = tableRowKeyGenerator;
@@ -70,6 +74,7 @@ namespace WaterCoolerAPI.Controllers
             this.bot = bot;
             this.activeRoomAndParticipantHelper = activeRoomAndParticipantHelper;
             this.roomLogoDataRepository = roomLogoDataRepository;
+            this.cache = cache;
         }
 
         /// <summary>
@@ -80,8 +85,8 @@ namespace WaterCoolerAPI.Controllers
         [Route(HttpRouteConstants.GetActiveRoomsWithParticipants)]
         public async Task<List<ActiveRoomData>> GetActiveParticipantListAsync()
         {
-            List<ActiveRoomData> activeRoomList = await this.activeRoomAndParticipantHelper.ActiveParticipantListAsync();
-            return activeRoomList;
+            string activeRoomData = this.cache.GetString(Common.Constants.ActiveRoomData);
+            return JsonConvert.DeserializeObject<List<ActiveRoomData>>(activeRoomData);
         }
 
         /// <summary>

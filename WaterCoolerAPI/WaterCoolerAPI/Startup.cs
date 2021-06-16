@@ -119,6 +119,7 @@ namespace WaterCoolerAPI
             });
 
             services.AddHostedService<ParticipantsScheduler>();
+            services.AddDistributedMemoryCache();
         }
 
         /// <summary>
@@ -155,7 +156,7 @@ namespace WaterCoolerAPI
             bool containerExists = Task.Run(async () => await blobHelper.CheckOrCreateBlobContainer()).Result;
             if (containerExists)
             {
-                bool blobsUploaded= Task.Run(async () => await blobHelper.BlobUpload()).Result;
+                bool blobsUploaded = Task.Run(async () => await blobHelper.BlobUpload()).Result;
             }
         }
     }
