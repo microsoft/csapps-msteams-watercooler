@@ -8,6 +8,8 @@ Water Cooler is a custom Teams app that enables corporate teams to create, invit
 
 The app provides an easy interface for anyone to find an existing conversation or start a new one. It's a foundation for building custom targeted communication capabilities, promoting interaction amongst coworkers who may otherwise not get a chance to socialize during breaks.
 
+![App Screens](Wiki/Images/appScreens.gif)
+
 ## Key features
 
 * __Water Cooler Home Page__: Browse existing rooms where team members are interacting in existing conversations with certain people or topics of interest. Active conversations on the Home Page will show a room name, short description, call duration, and room image. 
