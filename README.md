@@ -16,8 +16,10 @@ The app provides an easy interface for anyone to find an existing conversation o
 
   ![Homepage](Wiki/Images/homepage.png)
 * __Join room__: Active conversations will show a Join button to allow visitors to immediately enter an ongoing conversation.
+
   ![Join room](Wiki/Images/joinRoom.png)
 * __Room creation__: Easily create rooms by specifying the room name, short description, up to 5 colleagues as an initial group and selecting from the provided set of room images. Room creation will create a Teams call/chat for all attendees to interact.
+
   ![Create room](Wiki/Images/createRoom.png)
 * __Find room__: Use the find room feature to search keyword which will match the topic or short descriptions of ongoing conversations.
 
@@ -185,8 +187,8 @@ Please make sure you are ready with the following list:
        6. __Base Resource Name__: You need to think of a name here, keep it under 12 characters and all lower-case.
        7. __User Id__: This is the Azure AD GUID for the user account you want to run the application as. It just needs to be a regular AD account, no special licencing or permissions.
        8. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.
-       9. __Web API Url__: Think of a name for your backend app service (e.g. watercoolerwebapi) - write this down as you'll need it later.
-       10. __Web UI Url__: Think of a name for your frontend app service (e.g. watercoolerwebui) - write this down as you'll need it later.
+       9. __Web API Url__: Think of a name for your backend app service (e.g. `watercoolerwebapi`) - write this down as you'll need it later.
+       10. __Web UI Url__: Think of a name for your frontend app service (e.g. `watercoolerwebui`) - write this down as you'll need it later.
        11. __SKU__: The app service plan. Basically the values are `F1 (Free)`, `D1 (Shared)`, `B1`, `B2`, `B3` 
            (Basic), `S1`, `S2`, `S3` (Standard plans), `P1v2`, `P2v2`, `P3v2` (Premium V2 service plans), etc., You can 
            check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). `e.g. S1`.
@@ -334,12 +336,12 @@ Alternatively you may follow the steps below:
    1. Make sure you have cloned the app repository locally.
    2. Open the  Manifest\manifest.json file in a text editor.
    3. Change the placeholder fields in the manifest to values appropriate for your organization in developer property.
-      1. MenifestVersion = `1.5`
-      2. Version = `1.0.0`
-      3. developer.name
-      4. developer.websiteUrl
-      5. developer.privacyUrl
-      6. developer.termsOfUseUrl [Note: These 3 URLs should be different]
+      1. `MenifestVersion = 1.5`
+      2. `Version = 1.0.0`
+      3. `developer.name` = Microsoft ([What's this?](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#developer)) 
+      4. `developer.websiteUrl`
+      5. `developer.privacyUrl`
+      6. `developer.termsOfUseUrl` [Note: These 3 URLs should be different]
    4. Change the placeholder fields in the manifest to values appropriate to app name property
       1. short: “`Water Cooler`”,
       2. Full: “`Water Cooler`”
