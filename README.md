@@ -12,6 +12,9 @@ The app provides an easy interface for anyone to find an existing conversation o
 
 ## Key features
 
+* __Water Cooler Welcome Tour__: Welcome tour gives a brief introduction about the Water cooler app and helps the users on how to create the rooms or join existing rooms. 
+
+  ![WelcomeTour](Wiki/Images/WelcomeTour.gif)
 * __Water Cooler Home Page__: Browse existing rooms where team members are interacting in existing conversations with certain people or topics of interest. Active conversations on the Home Page will show a room name, short description, call duration, and room image. 
 
   ![Homepage](Wiki/Images/homepage.png)
