@@ -239,23 +239,27 @@ Please make sure you are ready with the following list:
     12. Open CMD, go to the waterCoolerClientApp directory.
     13. Open file explorer and go to the extracted location -> and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL).
     14. Save development.ts
+    15. Open SRC/configVariables.ts file in any editor and replace
+        1. `termsOfUseText`: The text should be shown in welcome card link.
+        2. `termsOfUseUrl`: The link to be redirected when user click on the `termsOfUseText`.
+    16. Save configVariables.ts file
 
    #### Bulding the UI App ready for deployment
 
-    15. Go back to CMD you have open (you need to be in the waterCoolerClientApp directory)
-    16. Run npm install command (If this doesn’t work – you’ll need to install Node.JS)
+    17. Go back to CMD you have open (you need to be in the waterCoolerClientApp directory)
+    18. Run npm install command (If this doesn’t work – you’ll need to install Node.JS)
         ```python
         npm install
-    17. Run npm run-script build
+    19. Run npm run-script build
         ```python
         npm run-script build
         
-    18. Go to the __‘build’__ folder and Zip the entire contents and upload in the window opened in step 5.
-    19. __TIP__: Don’t .Zip the actual Build folder – only the contents! 
-    20. __Tip__: You upload by dragging the .zip package onto the browser window:
+    20. Go to the __‘build’__ folder and Zip the entire contents and upload in the window opened in step 5.
+    21. __TIP__: Don’t .Zip the actual Build folder – only the contents! 
+    22. __Tip__: You upload by dragging the .zip package onto the browser window:
 
         ![Drop to deploy](Wiki/Images/dropDeploy.png)
-    21. You can check this has worked by going to: `https://%webuiurl%` and you should see the Loading screen (it will stay like this)
+    23. You can check this has worked by going to: `https://%webuiurl%` and you should see the Loading screen (it will stay like this)
 
         ![App loader](Wiki/Images/appLoader.png)
 
@@ -344,7 +348,8 @@ Alternatively you may follow the steps below:
       3. `developer.name` = Microsoft ([What's this?](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#developer)) 
       4. `developer.websiteUrl`
       5. `developer.privacyUrl`
-      6. `developer.termsOfUseUrl` [Note: These 3 URLs should be different]
+      6. `developer.termsOfUseUrl` (This should be the same Terms of use URL used in step 4 ->15-> 2)
+   [Note: These 3 URLs should be different]
    4. Change the placeholder fields in the manifest to values appropriate to app name property
       1. short: “`Water Cooler`”,
       2. Full: “`Water Cooler`”
