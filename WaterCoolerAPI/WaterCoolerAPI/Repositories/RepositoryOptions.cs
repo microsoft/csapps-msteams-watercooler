@@ -30,6 +30,16 @@ namespace WaterCoolerAPI.Repositories
         public string BlobContainerName { get; set; }
 
         /// <summary>
+        /// Gets or sets the TermsofUseText.
+        /// </summary>
+        public string TermsofUseText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the TermsofUseUrl.
+        /// </summary>
+        public string TermsofUseUrl { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the table should be created
         /// if it does not already exist.
         /// </summary>

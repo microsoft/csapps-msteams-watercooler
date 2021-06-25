@@ -1,0 +1,232 @@
+.taskModule {
+
+    .formContainer {
+        position: absolute;
+        top: 0rem;
+        bottom: 8.4rem;
+        width: 100%;
+
+        .scrollableContent {
+            overflow: auto;
+            height: 100%;
+            min-height: 100%;
+            margin-inline-start: 2rem;
+
+            .formContentContainer {
+                margin-inline-end: 2rem; 
+                margin-top: 15px;
+                width: 100%;
+                
+                .inputField {
+
+                    label {
+                        margin-top: 15px;
+                    }
+                    input {
+                        font-size: 15px;
+                        margin-bottom: 10px;
+                        font-stretch: normal;
+                    }
+                }
+
+                mgt-people-picker {
+                    --input-border: 2px #dad9d7 solid;
+                }
+
+                .fieldLabel {
+                    margin-top: 10px;
+                }
+
+                .fieldError {
+                    float: right;
+                    text-align: right;
+                    font-size: 13px;
+                    color: #4b4b4b;
+                    margin-inline-end: 0rem;
+                    margin-bottom: -30px;
+                    width: 100%;
+                }
+
+                .groupImageContainer {
+                    width: 100%;
+                    height: 300px;
+                    overflow-y: scroll;
+                    margin: 20px 0 0 0;
+
+                    .groupImage {
+                        height: 85px;
+                        width: 85px;
+                        border-radius: 50%;
+                        margin-right: 20px;
+                        margin-bottom: 20px;
+                        float: left;
+                        border: 3px solid #FFFFFF;
+                    }
+
+                    .groupImageSelected {
+                        height: 85px;
+                        width: 85px;
+                        border-radius: 50%;
+                        margin-right: 20px;
+                        margin-bottom: 20px;
+                        float: left;
+                        padding: 1px;
+                        border: 3px solid #e96080;
+                    }
+                }
+            }
+        }
+        .footerContainer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            padding: 2rem 0rem 2rem 0rem;
+            width: 100%;
+            text-align: right;
+
+            .buttonContainer {
+                margin-inline-end: 1.5rem;
+            }
+        }
+    }
+}
+
+// Theme changes for High Contrast Mode
+.highContrastContainer{
+
+    .taskModule {
+
+        .formContainer {
+            background-color: #000000;
+            
+            .scrollableContent { 
+                background-color: #000000;
+                
+                .formContentContainer {
+
+                    mgt-people-picker {
+                        --input-background-color:#000000;
+                        --selected-person-background-color:black;
+                        --color-sub1:#ffffff;
+                        --dropdown-background-color: #000000;
+                        --dropdown-item-hover-background: #2997CC;
+                        --placeholder-color:#FFFFFF;
+                    }
+                     
+                    .fieldError {
+                        color: #FFFF01;
+                    }
+                    
+                    .groupImageContainer {
+
+                        .groupImage {
+                            border: 2px solid #1aebff;
+                        }
+
+                        .groupImageSelected {
+                            border: 3px solid #FFFF01;
+                        }
+                    }
+                }
+            }
+        }
+        .footerContainer {
+
+            .buttonContainer {
+
+                #cancelBtn{
+                    background-color: #ffffff;
+                    border: #ffffff;
+                    color:black;
+                }
+
+                #cancelBtn:hover{
+                    background-color: #FFFF01;
+                }
+
+                #createBtn{
+                    background-color:#000000 ;
+                    border: 1px solid #FFFFFF;
+                    color: #FFFFFF;
+                }
+
+                #createBtn:hover{
+                    background-color: #FFFF01;
+                }
+            }
+        }
+    }
+}
+
+// Theme changes for Dark Mode
+.darkContainer{
+
+    .taskModule {
+       
+        .formContainer {
+            background-color: #242322 ;
+            
+            .scrollableContent { 
+                background-color: #242322;
+                
+                .formContentContainer {
+
+                    .inputField {
+
+                        input {
+                            background-color: #282828;
+                        }
+                    }
+                    .fieldError {
+                        color: #ffffff;
+                    }
+                    mgt-people-picker {
+                        --input-background-color:#333333 ;
+                        --input-border: 2px #333333 solid;
+                        --color-sub1:#969696;
+                        --dropdown-background-color: #3D3D3D;
+                        --dropdown-item-hover-background: #333d47;
+                        --placeholder-color:#FFFFFF;
+                    }
+                    
+                    .groupImageContainer {
+
+                        .groupImage {
+                            border: 2px solid #FFFFFF;
+                        }
+
+                        .groupImageSelected {
+                            border: 3px solid #e96080;
+                        }
+                    
+                    }
+                }
+            }
+        }
+        
+        .footerContainer {
+
+            .buttonContainer {
+                #cancelBtn{
+                    background-color: #171717;
+                    border: #ffffff;
+                    color:#ffffff;
+                }
+
+                #cancelBtn:hover{
+                    background-color: #2F2F2F;
+                }
+
+                #createBtn{
+                    background-color:#6264a7 ;
+                    border: 1px solid #6264a7;
+                    color: #FFFFFF;
+                }
+
+                #createBtn:hover{
+                    background-color: #8A8FFF;
+                }  
+            }
+        }
+    }
+}

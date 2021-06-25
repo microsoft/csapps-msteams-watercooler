@@ -2,8 +2,15 @@ import axios, { user } from './axiosJWTDecorator';
 import { getBaseUrl, graphAPIUrl } from '../configVariables';
 import { IRoomDetails } from "../components/Rooms/RoomsInterface";
 import { IRoomIcons } from '../components/NewRoom/NewRoomInterface';
+
 export interface IGraphResponse {
   value: []
+}
+
+export interface IWelcomeCardResponse {
+  isFirstLogin: boolean,
+  termsofUseText: string,
+  termsofUseUrl: string,
 }
 
 let baseAxiosUrl = getBaseUrl() + '/api';
@@ -35,6 +42,12 @@ export const getRoomIcons = async (): Promise<IRoomIcons[]> => {
   let url = baseAxiosUrl + "/RoomData/GetRoomLogoUrls";
   const roomIcons = await axios.get(url);
   return roomIcons.data;
+}
+
+export const getWelcomeStatus = async (): Promise<IWelcomeCardResponse> => {
+  let url = baseAxiosUrl + "/RoomData/CheckUserLogin";
+  const welcomeStatus = await axios.get(url);
+  return welcomeStatus.data;
 }
 
 export const fetchMsGraphProfilePic = async (userId: string) => {

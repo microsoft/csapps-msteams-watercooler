@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import './App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Dashboard from './components/Dashboard/dashboard';
+import WelcomeCard from './components/WelcomeCard/WelcomeCard';
 import newRoom from './components/NewRoom/NewRoom';
 import { TeamsThemeContext, getContext, ThemeStyle } from 'msteams-ui-components-react';
 import * as microsoftTeams from "@microsoft/teams-js";
@@ -106,6 +107,7 @@ class App extends React.Component<{}, IAppState> {
               <Switch>
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/newRoom" component={newRoom} />
+                <Route exact path="/welcomeCard" component={WelcomeCard} />
               </Switch>
             </BrowserRouter>
           </div>

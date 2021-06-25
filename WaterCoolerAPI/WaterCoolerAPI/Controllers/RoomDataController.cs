@@ -19,11 +19,14 @@ namespace WaterCoolerAPI.Controllers
     using Newtonsoft.Json;
     using WaterCoolerAPI.Bot;
     using WaterCoolerAPI.Common;
+    using WaterCoolerAPI.Helpers;
     using WaterCoolerAPI.Interface;
     using WaterCoolerAPI.Meetings.ParticipantData;
+    using WaterCoolerAPI.Models;
     using WaterCoolerAPI.Repositories;
     using WaterCoolerAPI.Repositories.RoomData;
     using WaterCoolerAPI.Repositories.RoomLogoUrlData;
+    using WaterCoolerAPI.Repositories.UserLoginData;
 
     /// <summary>
     /// Controller for room data.
@@ -35,10 +38,12 @@ namespace WaterCoolerAPI.Controllers
     public class RoomDataController : ControllerBase
     {
         private readonly IRoomDataRepository roomDataRepository;
+        private readonly IUserLoginDataRepository userLoginDataRepository;
         private readonly IDistributedCache cache;
         private readonly TableRowKeyGenerator tableRowKeyGenerator;
         private readonly ILogger<RoomDataController> logger;
         private readonly IGraph graph;
+        private readonly CreateRoomHelper createRoomHelper;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly Bot bot;
         private readonly IActiveRoomAndParticipant activeRoomAndParticipantHelper;
@@ -64,7 +69,9 @@ namespace WaterCoolerAPI.Controllers
             Bot bot,
             IActiveRoomAndParticipant activeRoomAndParticipantHelper,
             IRoomLogoDataRepository roomLogoDataRepository,
-            IDistributedCache cache)
+            IDistributedCache cache,
+            IUserLoginDataRepository userLoginDataRepository,
+            CreateRoomHelper createRoomHelper)
         {
             this.roomDataRepository = roomDataRepository;
             this.tableRowKeyGenerator = tableRowKeyGenerator;
@@ -75,6 +82,8 @@ namespace WaterCoolerAPI.Controllers
             this.activeRoomAndParticipantHelper = activeRoomAndParticipantHelper;
             this.roomLogoDataRepository = roomLogoDataRepository;
             this.cache = cache;
+            this.userLoginDataRepository = userLoginDataRepository;
+            this.createRoomHelper = createRoomHelper;
         }
 
         /// <summary>
@@ -87,6 +96,19 @@ namespace WaterCoolerAPI.Controllers
         {
             string activeRoomData = this.cache.GetString(Common.Constants.ActiveRoomData);
             return JsonConvert.DeserializeObject<List<ActiveRoomData>>(activeRoomData);
+        }
+
+        /// <summary>
+        /// Checks if the user has logged in for the first time or not.
+        /// </summary>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        [HttpGet]
+        [Route(HttpRouteConstants.CheckUserLogin)]
+        public async Task<UserData> CheckUserLogin()
+        {
+            Task<UserPrincipalData> userData = this.createRoomHelper.GetUserPrincipalAndId();
+            Task<UserData> newUser = this.userLoginDataRepository.CheckFirstLoginAsync(userData.Result);
+            return newUser.Result;
         }
 
         /// <summary>
@@ -110,20 +132,7 @@ namespace WaterCoolerAPI.Controllers
         [Route(HttpRouteConstants.CreateRoom)]
         public async Task<string> CreateRoomAsync([FromBody] RoomDataEntity roomDataEntity)
         {
-            string userPrincipleName = null;
-            string objectId = null;
-            var httpContext = this.httpContextAccessor.HttpContext;
-            httpContext.Request.Headers.TryGetValue(Constants.Authorization, out StringValues assertion);
-            var idToken = assertion.ToString().Split(" ")[1];
-            if (idToken.Length > 0)
-            {
-                var handler = new JwtSecurityTokenHandler();
-                if (handler.ReadToken(idToken) is JwtSecurityToken tokenS)
-                {
-                    userPrincipleName = tokenS.Claims.Where(a => a.Type.Equals(Constants.UpnKey)).Select(b => b).FirstOrDefault()?.Value;
-                    objectId = tokenS.Claims.Where(a => a.Type.Equals(Constants.OidKey)).Select(b => b).FirstOrDefault()?.Value;
-                }
-            }
+            Task<UserPrincipalData> userData = this.createRoomHelper.GetUserPrincipalAndId();
 
             string onlineMeetingUrl = null;
             try
@@ -143,8 +152,8 @@ namespace WaterCoolerAPI.Controllers
                         roomDataEntity.MeetingUrl = onlineMeeting.JoinWebUrl;
                         roomDataEntity.StartDateTime = onlineMeeting.StartDateTime;
                         roomDataEntity.EndDateTime = onlineMeeting.EndDateTime;
-                        roomDataEntity.UserPrincipleName = userPrincipleName;
-                        roomDataEntity.ObjectId = objectId;
+                        roomDataEntity.UserPrincipleName = userData.Result.UserPrincipalName;
+                        roomDataEntity.ObjectId = userData.Result.ObjectId;
 
                         var callId = (await this.bot.JoinTeamsMeetingAsync(roomDataEntity)).Id;
                         if (!string.IsNullOrEmpty(callId))
