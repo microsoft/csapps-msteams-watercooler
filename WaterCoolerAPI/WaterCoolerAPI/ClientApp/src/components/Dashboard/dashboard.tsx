@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { getRoomList } from "../../apis/WaterCoolerApi";
+import React from 'react';
+import { getRoomList, getWelcomeStatus } from "../../apis/WaterCoolerApi";
 import Rooms from '../Rooms/Rooms';
 import './dashboard.scss';
 import { dashboardState, ITaskinfo } from './dashboardInterface';
@@ -31,6 +31,9 @@ class dashboard extends React.Component<{}, dashboardState> {
   }
 
   componentDidMount() {
+    console.log('dashboard loads');
+    microsoftTeams.initialize();
+    this.showWelcomeCard();
     this.getRoomList();
     this.interval = setInterval(() => {
       this.getRoomList();
@@ -64,7 +67,7 @@ class dashboard extends React.Component<{}, dashboardState> {
     } else {
       const userPlaceholder: string[] = [UserPlaceholder, FemaleUserPlaceholder, FemaleUserPlaceholderTwo];
       let userImage = userPlaceholder.map((element) =>
-        <img src={element} className="avatarGroupImage" />
+        <img src={element} className="avatarGroupImage" key={element} alt=""/>
       );
       return (
         <div>
@@ -85,7 +88,7 @@ class dashboard extends React.Component<{}, dashboardState> {
             <div className="cornerCuts">
               <div className="innerCard">
                 <p className="heading">{WConst.constants.createRoom}</p>
-                <img src={RoomPlaceholder} className="avatar" />
+                <img src={RoomPlaceholder} className="avatar" alt="User Icons" />
                 <div className="avatarGroup">{userImage}</div>
                 <Button className="createRoomBtn" primary onClick={this.showModal}><Icon iconName="PeopleAdd" />&ensp;{WConst.constants.createRoom}</Button>
               </div>
@@ -105,6 +108,22 @@ class dashboard extends React.Component<{}, dashboardState> {
         loader: false
       })
     })
+  }
+
+  // show welcome card for the first time user
+  private showWelcomeCard = () => {
+    getWelcomeStatus().then(welcomeCardData => {
+      if (welcomeCardData.isFirstLogin) {
+        let taskInfo: ITaskinfo = {
+          url: `${window.location.origin}\\welcomeCard`,
+          title: WConst.constants.appTour,
+          height: 500,
+          width: 613,
+          fallbackUrl: `${window.location.origin}\\welcomeCard`
+        }
+        microsoftTeams.tasks.startTask(taskInfo);
+      }
+    });
   }
 
   componentWillUnmount() {

@@ -53,5 +53,10 @@ namespace WaterCoolerAPI.Common
         /// Route for getting Logo icon and Url for a call.
         /// </summary>
         public const string GetRoomLogoUrls = "GetRoomLogoUrls";
+
+        /// <summary>
+        /// Route for checking users first login.
+        /// </summary>
+        public const string CheckUserLogin = "CheckUserLogin";
     }
 }

@@ -38,18 +38,21 @@
       color: #3b3b3b;
       margin-top: 0;
       max-width: 65%;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      min-height: 46px !important;
     }
 
     .joinButton {
       float: right;
-      margin-top: -40px;
+      margin-top: -60px;
       border: 1px solid #FFFFFF;
       margin-right: 0;
     }
-
+    
     .avatar {
       height: 81px;
       width: 81px;
@@ -103,9 +106,10 @@
       margin-bottom: 0;
       height: 36px;
       max-width: 100%;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
   }
   
@@ -115,19 +119,19 @@
 }
 
 .searchBar {
-    margin-right: 20px;
-    .inputField {
-      input {
-          font-size: 15px;
-          margin-bottom: 20px;
-          font-stretch: normal;
-          background-color: transparent;
-          width: 200px;
-          float: right;
-          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
-      }
+  margin-right: 20px;
+  .inputField {
+    input {
+        font-size: 15px;
+        margin-bottom: 20px;
+        font-stretch: normal;
+        background-color: transparent;
+        width: 200px;
+        float: right;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
     }
   }
+}
 
   .searchIcon {
     float: right;
@@ -136,3 +140,76 @@
     margin-top: -53px;
     background-color: #FFFFFF;
   }
+
+  // High Contrast Theme Container
+  .highContrastContainer
+  {
+    .joinButton {
+      float: right;
+      margin-top: -40px;
+      border: 4px solid #000000;
+      margin-right: 0;
+    }
+    .joinButton:disabled{
+      background-color: #504f4f;
+      color: #aeaeae;
+      border: 2px solid #000000;
+    }
+    .joinButton:enabled{
+      color: #000000;
+      border: 2px solid #000000;
+      background-color: #FFFFFF ;
+    }
+    .joinButton:hover
+    {
+      background-color: #FFFF01;
+    }
+    .createRoomBtn {
+      margin-top: 20px;
+      background: #FFFFFF;
+      color: #000000;
+      border: 2px solid #000000 ;
+    }
+    .createRoomBtn:hover
+    {
+      background-color: #FFFF01;
+    }
+    
+    .searchIcon {
+      background-color: #000000;
+      color:#FFFFFF;
+    }  
+  }
+
+  // dark Theme Container
+  .darkContainer
+  {
+    .joinButton:disabled{
+      background-color: #504f4f;
+      color: #aeaeae;
+    }
+    
+    .searchIcon {
+      background: transparent;
+      border: 1px solid gray;
+    }
+
+    .cornerCuts{
+
+      .createRoomBtn {
+        margin-top: 20px;
+        background: #6264a7;
+        color: #ffffff;
+        border: 2px solid #6264a7 ;
+      }
+
+      .createRoomBtn:hover{
+        background-color: #8A8FFF;
+        border:#6264a7;
+        color:#000000;
+      }
+    }
+    
+  }
+
+

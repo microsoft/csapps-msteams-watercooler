@@ -10,6 +10,7 @@ namespace WaterCoolerAPI
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -24,6 +25,7 @@ namespace WaterCoolerAPI
     using WaterCoolerAPI.Repositories.RoomData;
     using WaterCoolerAPI.Repositories.RoomLogoUrlData;
     using WaterCoolerAPI.Repositories.TeamsLogoUrlData;
+    using WaterCoolerAPI.Repositories.UserLoginData;
 
     /// <summary>
     /// Register services in DI container, and set up middle-wares in the pipeline.
@@ -68,10 +70,22 @@ namespace WaterCoolerAPI
                     repositoryOptions.BlobContainerName =
                         configuration.GetValue<string>(Constants.BlobContainerNameConfigurationSettingsKey);
 
+                    repositoryOptions.TermsofUseText =
+                        configuration.GetValue<string>(Constants.TermsofUseTextConfigurationSettingsKey);
+
+                    repositoryOptions.TermsofUseUrl =
+                        configuration.GetValue<string>(Constants.TermsofUseUrlConfigurationSettingsKey);
+
                     // Setting this to true because the main application should ensure that all
                     // tables exist.
                     repositoryOptions.EnsureTableExists = true;
                 });
+            // Setup SPA static files.
+            // In production, the React files will be served from this directory.
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
 
             services.AddSingleton<IGraphLogger>(this.logger)
                 .AddAuthentication(sharedOptions =>
@@ -94,8 +108,10 @@ namespace WaterCoolerAPI
             // Add repositories.
             services.AddSingleton<IRoomDataRepository, RoomDataRepository>();
             services.AddSingleton<IParticipantDataRepository, ParticipantDataRepository>();
+            services.AddSingleton<IUserLoginDataRepository, UserLoginDataRepository>();
 
             services.AddTransient<TableRowKeyGenerator>();
+            services.AddTransient<CreateRoomHelper>();
 
             services.AddSingleton<IGraph, GraphHelper>();
             services.AddSingleton<IActiveRoomAndParticipant, ActiveRoomAndParticipantHelper>();
@@ -138,6 +154,8 @@ namespace WaterCoolerAPI
 
             app.UseStaticFiles();
 
+            app.UseSpaStaticFiles();
+
             app.UseRouting();
 
             app.UseCors(Constants.CORSAllowAllPolicy);
@@ -148,6 +166,16 @@ namespace WaterCoolerAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
 
             /// <summary>

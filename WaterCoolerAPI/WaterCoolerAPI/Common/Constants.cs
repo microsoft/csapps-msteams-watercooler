@@ -225,6 +225,16 @@ namespace WaterCoolerAPI.Common
         public const string BlobContainerNameConfigurationSettingsKey = "BlobContainerName";
 
         /// <summary>
+        /// get the TermsofUseText.
+        /// </summary>
+        public const string TermsofUseTextConfigurationSettingsKey = "TermsofUseText";
+
+        /// <summary>
+        /// get the TermsofUseText.
+        /// </summary>
+        public const string TermsofUseUrlConfigurationSettingsKey = "TermsofUseUrl";
+
+        /// <summary>
         /// get the Azure Ad key.
         /// </summary>
         public const string AzureAdConfigurationSettingsKey = "AzureAd";

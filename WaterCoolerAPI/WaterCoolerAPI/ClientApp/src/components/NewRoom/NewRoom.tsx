@@ -78,7 +78,6 @@ export class Newroom extends React.Component<{}, INewRoomState> {
                 <p className="fieldError">{this.state.errorRoomTitleMessage}</p>
                 <Input className="inputField"
                   label={WConst.constants.roomTitle}
-                  placeholder={WConst.constants.enterNewRoom}
                   autoComplete="off"
                   onChange={this.onRoomTitleChanged}
                   fluid
@@ -87,7 +86,6 @@ export class Newroom extends React.Component<{}, INewRoomState> {
                 <p className="fieldError">{this.state.errorRoomDescriptionMessage}</p>
                 <Input className="inputField"
                   label={WConst.constants.shortDescription}
-                  placeholder={WConst.constants.enterShortDescription}
                   autoComplete="off"
                   onChange={this.onRoomDescriptionChanged}
                   fluid
@@ -111,7 +109,7 @@ export class Newroom extends React.Component<{}, INewRoomState> {
                   <Flex.Item push>
                     <Button content="Cancel" secondary id="cancelBtn" onClick={this.onCancelRoom} />
                   </Flex.Item>
-                  <Button content={WConst.constants.create} id="createBtn" disabled={!this.state.roomTitle || !this.state.roomDescription || this.state.selectedPeople.length == 0} onClick={this.onCreateRoom} primary />
+                  <Button content={WConst.constants.create} id="createBtn" disabled={!this.state.roomTitle || !this.state.roomDescription} onClick={this.onCreateRoom} primary />
                 </Flex>
               </Flex>
             </Flex>
