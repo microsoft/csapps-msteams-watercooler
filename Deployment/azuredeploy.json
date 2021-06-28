@@ -293,7 +293,7 @@
               "value": "[parameters('termsOfUseUrl')]"
             },
             {
-              "name": "termsOfUseText",
+              "name": "TermsOfUseText",
               "value": "[parameters('termsOfUseText')]"
             },
             {
