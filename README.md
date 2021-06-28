@@ -130,28 +130,7 @@ Please make sure you are ready with the following list:
        ![App Data](Wiki/Images/appData.png)
 
 
-2. __Set-up Bot__
-    1. Open bot channels registration.
-    2. Fill appropriate details to create the bot.
-    3. Before you click 'create', at the bottom of the page Click on 'Microsoft App ID and Password' (we don't want to use auto create). 
-       1. On the next screen, click 'Create New'
-       2. Paste in the same Client ID and Secret you created in the step 1.
-
-       ![Bot Registration](Wiki/Images/botRegistration.png)
-
-       ![Bit App ID](Wiki/Images/botAppId.png)
-
-    4. Go to Channels from left tray.
-
-       ![Channels](Wiki/Images/channels.png)
-
-    5. Setup Microsoft Teams in channels
-
-       ![Connect Channels](Wiki/Images/connectChannels.png)
-       
-       __Note__: We will come back to configure the Teams Channel you just enabled later on.
-
-3. __Deploy your Azure subscription__
+2. __Deploy your Azure subscription__
     1. Click on the __Deploy to Azure__ button below.
 
        [![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fcsapps-msteams-watercooler%2Fmain%2FDeployment%2Fazuredeploy.json)
@@ -169,32 +148,17 @@ Please make sure you are ready with the following list:
           4. Azure Bot Services
 
             For an up-to-date list of datacenters that support the above, click [here](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=monitor,bot-services,storage,app-service)
-
-            Note: You’re about to complete the template fields. The __Base Resource Name is important__ – as the template uses it to generate names for the other resources.
- 
-       3. The [Base Resource Name] must be available. For example, if you select xwatercooler as the base name, the name xwatercooler must be available (not taken); otherwise, the deployment will fail with a Conflict error.
-       4. Base resource name should be lowercase.
-       5. We recommend keeping the Base Resource Name under 12 characters
-       6. Base `Resource name + storage account` name must not exceed 24 characters
-       7. Remember the base resource name that you selected. We will need it later
-
     5. Update the following fields in the template:
        1. __Client ID__: The application (client) ID of the Microsoft Teams Water Cooler bot app. (from Step 1)
        2. __Client Secret__: The client secret of the Microsoft Teams Water Cooler bot app. (from Step 1)
-       3. __Tenant Id__: The tenant ID. (from Step 1). Basically, it will take it from the logged in tenant.
-          You can also update manually.
-       4. __Bot Id__: The Bot Id that you have created. If you create the clientId as Bot Id keep the BotId and 
-          ClientId as same values
-       5. __Bot Secret__: The created Bot Secret. If you create the ClientId as Bot Id then you can also keep 
-          the client secret as Bot Secret.
-       6. __Base Resource Name__: You need to think of a name here, keep it under 12 characters and all lower-case.
-       7. __User Id__: This is the Azure AD GUID for the user account you want to run the application as. It just needs to be a regular AD account, no special licencing or permissions.
-       8. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.
-       9. __Web API Url__: Think of a name for your backend app service (e.g. `watercoolerwebapi`) - write this down as you'll need it later.
-       10. __Web UI Url__: Think of a name for your frontend app service (e.g. `watercoolerwebui`) - write this down as you'll need it later.
-       11. __SKU__: The app service plan. Basically the values are `F1 (Free)`, `D1 (Shared)`, `B1`, `B2`, `B3` 
-           (Basic), `S1`, `S2`, `S3` (Standard plans), `P1v2`, `P2v2`, `P3v2` (Premium V2 service plans), etc., You can 
-           check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). `e.g. S1`.
+       3. __Bot Name__: – Give the name to the Bot, as the calls will be initiated by bot in the Watercooler teams app.
+       4. __User Id__: This is the Azure AD GUID for the user account you want to run the application as. It just needs to be a regular AD account, no special licencing or permissions
+       5. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.
+       6. __App Service Name__: Think of a name for your backend app service (e.g. `watercoolerwebapi`) - write this down as you'll need it later.
+       7. __Tenant Id__: The tenant ID. (from Step 1). Basically, it will take it from the logged in tenant. You can also update manually.
+       8. __SKU__: The app service plan. Basically the values are `F1 (Free)`, `D1 (Shared)`, `B1`, `B2`, `B3` (Basic), `S1`, `S2`, `S3` (Standard plans), `P1v2`, `P2v2`, `P3v2` (Premium V2 service plans), etc., You can check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). `e.g. S1`.
+       9. __Terms Of Use Text__: The text that should be shown in welcome card link.
+       10. __Terms Of Use Url__: The link to be redirected when user click on the TermsOfUseText..
 
        __Note__: Make sure that the values are copied as-is, with no extra spaces. The template checks that GUIDs are exactly 36 
        characters.
@@ -208,74 +172,24 @@ Please make sure you are ready with the following list:
        good. Click on Create to start the deployment.
     9. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It may take __up to an hour__ for the deployment to finish.
     10. Once successfully deployed, get the URL value from the Web API App Service that has been provisioned. Copy that value to clipboard for use next (and later).  
-        1. Go to: Home -> Bot Services -> Your Bot -> Channels -> Microsoft Teams (edit) -> Calling tab -> Tick ‘Enable Calling’ -> create Webhook like example here: `https://yourwebapiurl.azurewebsites.net/callback/calling`
+        1. Go to: Home -> Bot Services -> Your Bot -> Channels -> Microsoft Teams (edit) -> Calling tab -> Tick ‘Enable Calling’ -> create Webhook like example here: `https://yourappserviceurl.azurewebsites.net/callback/calling`
         2. Click Save
 
            ![Bot Calling](Wiki/Images/botCalling.png)
    
 
-4. __Create UI App service for client App__
-    1. Go to app services from homepage
-    2. Click on create, the below interface will appear. Fill the appropriate details and create.
-    3. Name = webui URL from 
-       App Service (Step 3). E.g. `watercoolerwebui` (no https)
-    4. Runtime stack = `.Net 3.1`
-
-       ![UI App service](Wiki/Images/uiAppService.png)
-    5. After creating UI App service go to App service overview page.
-    6. Copy UI App service URL and save to clipboard.
-    7. __TIP__: Make sure this is the __UI App service__ (not the API App Service!) 
-    8. Then edit the URL as shown below (you need to add ‘scm’ into the URL as shown. 
-       e.g. `https://%uiAppservicename%.scm.azurewebsites.net`)
-
-    9. Open this URL in browser and go to Tools > ZIP push deploy
-
-       ![Zip Deploy](Wiki/Images/zipDeploy.png)
-    10. Make sure you have cloned or Downloaded the repository. (You can do this from the Git repository and download the .Zip file).
-
-        ![Git Download](Wiki/Images/gitDownload.png)
-
-    11. Extract the contents to your local machine.
-    12. Open CMD, go to the waterCoolerClientApp directory.
-    13. Open file explorer and go to the extracted location -> and open SRC/environment/development.ts file in any editor and replace the URL for the webapi URL (you should have this in your clipboard, if not go to Azure -> App Services -> Find your API service -> copy the URL).
-    14. Save development.ts
-    15. Open SRC/configVariables.ts file in any editor and replace
-        1. `termsOfUseText`: The text should be shown in welcome card link.
-        2. `termsOfUseUrl`: The link to be redirected when user click on the `termsOfUseText`.
-    16. Save configVariables.ts file
-
-   #### Bulding the UI App ready for deployment
-
-    17. Go back to CMD you have open (you need to be in the waterCoolerClientApp directory)
-    18. Run npm install command (If this doesn’t work – you’ll need to install Node.JS)
-        ```python
-        npm install
-    19. Run npm run-script build
-        ```python
-        npm run-script build
-        
-    20. Go to the __‘build’__ folder and Zip the entire contents and upload in the window opened in step 5.
-    21. __TIP__: Don’t .Zip the actual Build folder – only the contents! 
-    22. __Tip__: You upload by dragging the .zip package onto the browser window:
-
-        ![Drop to deploy](Wiki/Images/dropDeploy.png)
-    23. You can check this has worked by going to: `https://%webuiurl%` and you should see the Loading screen (it will stay like this)
-
-        ![App loader](Wiki/Images/appLoader.png)
-
-5. __Set-up Authentication__
+3. __Set-up Authentication__
    1. Go to App Registrations page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) and open the Water Cooler app you created (in Step 1) from the application list.
    2. Under __Manage__, click on __Authentication__ to bring up authentication settings.
       1. Add a new entry to __Redirect URIs__:
          1. __Type__: Web
-         2. __Redirect URI__: Enter  `https://%clientAppServiceUrl%/`auth-end for the URL e.g. `https://yourappdomain.net/auth-end` (client app service)
-         3. You can find this URL by: Azure -> App Services -> your Web UI App Service -> copy URL
-         4. This is NOT your webAPI url.
+         2. __Redirect URI__: Enter  `https://%AppServiceUrl%/`auth-end for the URL e.g. `https://yourappserviceurl/auth-end` (app service)
+         3. You can find this URL by: Azure -> App Services -> your App Service -> copy URL
       2. Under __Implicit grant__, check __ID tokens__.
       3. Click __Configure__ to commit your changes.
    3. Back under __Manage__, click on __Expose an API__.
-      1. Click on the __Set__ link next to __Application ID URI__, and change the value to `api://%clientAppServiceURL%/clientId`, this is the same URL you used in the previous step (but with api not https) see below: 
-e.g. `api://youappwebuiurl.azurewebsites.net/clientId`.
+      1. Click on the __Set__ link next to __Application ID URI__, and change the value to `api://%AppServiceURL%/clientId`, this is the same URL you used in the previous step (but with api not https) see below: 
+e.g. `api://youappserviceurl.azurewebsites.net/clientId`.
 
       2. Click __Save__ to commit your changes.
       3. Click on __Add a scope__, under __Scopes defined by this API__. In the flyout that appears, enter the following values:
@@ -290,7 +204,7 @@ e.g. `api://youappwebuiurl.azurewebsites.net/clientId`.
       6. Click __Add application__ to commit your changes.
       7. __Repeat the previous two steps__, but with client ID = `1fec8e78-bce4-4aaf-ab1b-5451cc387264`. After this step you should have __two__ client applications (`5e3ce6c0-2b1f-4285-8d4b-75ee78787346` and `1fec8e78-bce4-4aaf-ab1b-5451cc387264`) listed under __Authorized client applications__.
 
-6. __Add Permissions to your App__
+4. __Add Permissions to your App__
 
    Continuing from the Azure AD app registration page where we ended Step 3.
    1. Select __API Permissions__ blade from the left-hand side.
@@ -325,7 +239,7 @@ Alternatively you may follow the steps below:
 
 
 
-7. __Give policy access to admin user__
+5. __Give policy access to admin user__
    
    In this step we need to connect as a Teams Administrator (or Global Administrator) to your tenant using PowerShell, and create an Application Access Policy so the user account the Water Cooler runs under can work with Teams properly.
    1. Open PowerShell as system administrator
@@ -336,7 +250,7 @@ Alternatively you may follow the steps below:
       4. New-CsApplicationAccessPolicy -Identity OnlineMeeting-WaterCooler -AppIds `%clientId%` -Description "Water cooler app - Online meeting policy for admin -Tenant"
       5. Grant-CsApplicationAccessPolicy -PolicyName OnlineMeeting-WaterCooler -Identity `%adminUserId%`
 
-8. __Create the Teams app package__
+6. __Create the Teams app package__
    
    Now everything is deployed in Azure, we need to package up the Teams App and add it into Teams!
 
@@ -357,8 +271,8 @@ Alternatively you may follow the steps below:
    5. Change the placeholder fields in the manifest as an example below:
       1. "entityId": "`waterCooler`",
       2. "name": "`Water Cooler`",
-      3. "contentUrl": `https://yourwebui.azurewebsites.net/`,
-      4. "websiteUrl": `"https://yourwebui.azurewebsites.net/`",
+      3. "contentUrl": `https://yourappserviceurl.azurewebsites.net/`,
+      4. "websiteUrl": `"https://yourappserviceurl.azurewebsites.net/`",
    6. Change the `<<clientId>>` placeholder in the id setting of the webApplicationInfo section to be the `%clientId%` value. Change the `<<appDomain>>` placeholder in the resource setting of the webApplicationInfo section to be the `%appDomain%` value e.g. `api://appname.azurewebsites.net/clientId`.
    7. Create a ZIP package with the  manifest.json, color.png, and outline.png. The two image files are the icons for your app in Teams.
       1. Name this package  `manifest.zip`, so you know that this is the app for the Water Cooler.
@@ -366,13 +280,13 @@ Alternatively you may follow the steps below:
 
          ![Manifest](Wiki/Images/manifest.png)
 
-9. __Install app in Microsoft Teams__
+7. __Install app in Microsoft Teams__
 
    1. Install the Water Cooler app (the  manifest.zip package)
       1. You can do this through the Teams Admin Centre -> Teams Apps -> Manage Apps -> Upload -> Select a File -> Choose Manifest.zip you just created
       2. If your tenant has sideloading apps enabled, you can install your app by following the instructions [here](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/apps/apps-upload#load-your-package-into-teams).
 
-10. __Upload room icons to blob storage__
+8. __Upload room icons to blob storage__
     1. Open the created storage in the Resource group.
     2. Click on Storage explorer -> Blob containers.
     3. Click on upload and upload the icons for room as shown below.
