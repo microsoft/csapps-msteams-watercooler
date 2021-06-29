@@ -79,7 +79,7 @@ User.Read.All | Read all users profile.
 
 ## Deployment Guide
 
-Deployment of the Water Cooler app will take approx. 90 minutes, assuming all pre-requisites are in place. 
+Deployment of the Water Cooler app will take approx. 90 minutes, assuming all pre-requisites are in place. 
 
 ### Pre-requisites
 
@@ -292,9 +292,58 @@ Alternatively you may follow the steps below:
     3. Click on upload and upload the icons for room as shown below.
 
        ![Blob Upload](Wiki/Images/blobUpload.png)
-    
+
 #### IMPORTANT
    Proactive app installation will work only if you upload the app to your tenant's app catalog. Install the app (the manifest.zip package) to the users and teams that will be the target audience.
+
+## __For Existing Customers__
+1. __Update app service application settings.__
+      1. Go to resource group provided for deployment. 
+      2. Open deployed API app service. 
+      3. Go to Configuration from left tray.
+      4. Click on Advance edit.
+ 
+         ![Configuration](Wiki/Images/config.png)
+  
+      5. Update following property values. 
+
+         ![Advance Settings](Wiki/Images/advanceEdit.png)
+
+      6. AzureAd:ApplicationIdURI : `api://yourapiappservice.azurewebsites.net/<<clientId>>` 
+      7. Add properties mentioned below.
+         1. `TermsOfUseText` (Terms of use Text to be shown in welcome card) 
+         2. `TermsOfUseUrl` (Link to be redirected when clicked on terms of use text)
+      8. __WEBSITE_NODE_DEFAULT_VERSION__ should be `14.16.0`
+      9. Save the configuration settings.
+
+2. __Sync the deployment.__
+     1. Go to __Deployment Center__ from left tray. 
+     2. Click on sync.
+
+        ![Deployment Center](Wiki/Images/sync.png)
+
+3. __Update app services link in registered App.__
+     1. Go to app registration. 
+     2. Open registered application.
+     3. Go to Expose an API.
+        1. Update __Application ID URI__
+
+           ![Expose An API](Wiki/Images/updateAppIdURI.png)
+
+        2. `api://yourapiappservice.azurewebsites.net/<<ClientId>>`
+        3. Save the changes.
+
+4. __Go to Authentication.__ 
+     1. Update __redirect WEB URIs__
+
+        ![Authentication](Wiki/Images/updateAuth.png)
+
+     2. `https://yourapiappservice.azurewebsites.net/auth-end`
+     3. Save the changes.
+
+5. Delete your __UI App service__. We don’t need it anymore.
+6. Create the Teams app package (Follow Deployment process  step 6 above)  
+
 
 ## Feedback
 Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public)!
