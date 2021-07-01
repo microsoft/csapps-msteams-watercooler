@@ -97,7 +97,7 @@
     "location": "[resourceGroup().location]",
     "applicationIdUri": "[concat('api://', parameters('appServiceName'), '.azurewebsites.net', '/', parameters('clientId'))]",
     "appServicePlanPortalName": "[concat('AppServicePlan-', parameters('appServiceName'))]",
-    "blobContainerName": "RoomIcons",
+    "blobContainerName": "roomicons",
     "appUrl": "[concat('https://', parameters('appServiceName'), '.azurewebsites.net')]",
     "gitRepoUrl": "https://github.com/microsoft/csapps-msteams-watercooler.git",
     "gitBranch": "main"
