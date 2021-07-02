@@ -151,12 +151,12 @@ Please make sure you are ready with the following list:
     5. Update the following fields in the template:
        1. __Client ID__: The application (client) ID of the Microsoft Teams Water Cooler bot app. (from Step 1)
        2. __Client Secret__: The client secret of the Microsoft Teams Water Cooler bot app. (from Step 1)
-       3. __Bot Name__: – Give the name to the Bot, as the calls will be initiated by bot in the Watercooler teams app.
+       3. __Bot Name__: – Give the name to the Bot, as the calls will be initiated by bot in the Watercooler teams app. (Bot name must be available `not taken` otherwise, the deployment will fail with a Conflict error)
        4. __User Id__: This is the Azure AD GUID for the user account you want to run the application as. It just needs to be a regular AD account, no special licencing or permissions
-       5. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.
-       6. __App Service Name__: Think of a name for your backend app service (e.g. `watercoolerwebapi`) - write this down as you'll need it later.
+       5. __Storage Account Name__: you need to think of a short name here for the storage table, keep it under 12 characters and all lower-case.(The storage name must be available `not taken` otherwise, the deployment will fail with a Conflict error) 
+       6. __App Service Name__: Think of a name for your app service (e.g. watercoolerappservice, must be available `not taken` otherwise, the deployment will fail with a Conflict error) - write this down as you'll need it later. 
        7. __Tenant Id__: The tenant ID. (from Step 1). Basically, it will take it from the logged in tenant. You can also update manually.
-       8. __SKU__: The app service plan. Basically the values are `F1 (Free)`, `D1 (Shared)`, `B1`, `B2`, `B3` (Basic), `S1`, `S2`, `S3` (Standard plans), `P1v2`, `P2v2`, `P3v2` (Premium V2 service plans), etc., You can check all the plans and its costs [here](https://azure.microsoft.com/en-us/pricing/details/app-service/windows/). `e.g. S1`.
+       8. __SKU__: The app service plan. P1v2, P2v2, P3v2 (Premium V2 service plans), etc., You can check all the plans and its costs here. e.g. P3v2. (We recommend Premium plan P3v2).
        9. __Terms Of Use Text__: The text that should be shown in welcome card link.
        10. __Terms Of Use Url__: The link to be redirected when user click on the TermsOfUseText..
 
