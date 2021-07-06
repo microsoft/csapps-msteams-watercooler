@@ -303,6 +303,10 @@
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",
               "value": "14.16.0"
+            },
+            {
+              "name": "SCM_COMMAND_IDLE_TIMEOUT",
+              "value": "600"
             }
           ]
         }

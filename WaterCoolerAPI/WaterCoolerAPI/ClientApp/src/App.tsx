@@ -6,8 +6,6 @@ import WelcomeCard from './components/WelcomeCard/WelcomeCard';
 import newRoom from './components/NewRoom/NewRoom';
 import { TeamsThemeContext, getContext, ThemeStyle } from 'msteams-ui-components-react';
 import * as microsoftTeams from "@microsoft/teams-js";
-import { updateLocale } from './i18n';
-import i18n from 'i18next';
 import { Provider, teamsTheme, teamsDarkTheme, teamsHighContrastTheme } from '@fluentui/react-northstar'
 
 export interface IAppState {
@@ -43,16 +41,13 @@ class App extends React.Component<{}, IAppState> {
         this.forceUpdate();
       });
     });
-
-    updateLocale();
   }
 
   public setThemeComponent = () => {
-    const rtl = i18n.dir() === "rtl";
 
     if (this.state.theme === "dark") {
       return (
-        <Provider theme={teamsDarkTheme} rtl={rtl}>
+        <Provider theme={teamsDarkTheme}>
           <div className="darkContainer">
             {this.getAppDom()}
           </div>
@@ -61,7 +56,7 @@ class App extends React.Component<{}, IAppState> {
     }
     else if (this.state.theme === "contrast") {
       return (
-        <Provider theme={teamsHighContrastTheme} rtl={rtl}>
+        <Provider theme={teamsHighContrastTheme}>
           <div className="highContrastContainer">
             {this.getAppDom()}
           </div>
@@ -69,7 +64,7 @@ class App extends React.Component<{}, IAppState> {
       );
     } else {
       return (
-        <Provider theme={teamsTheme} rtl={rtl}>
+        <Provider theme={teamsTheme}>
           <div className="defaultContainer">
             {this.getAppDom()}
           </div>
