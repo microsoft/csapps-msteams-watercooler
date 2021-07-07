@@ -59,6 +59,9 @@
     "sku": {
       "type": "string",
       "allowedValues": [
+        "S1",
+        "S2",
+        "S3",
         "P1v2",
         "P2v2",
         "P3v2",
