@@ -171,7 +171,11 @@ Please make sure you are ready with the following list:
     8. Click on "Agree & Create" to validate the template. It will validate the template and will provide create button if everything is 
        good. Click on Create to start the deployment.
     9. Wait for the deployment to finish. You can check the progress of the deployment from the "Notifications" pane of the Azure Portal. It may take __up to an hour__ for the deployment to finish.
-    10. Once successfully deployed, get the URL value from the Web API App Service that has been provisioned. Copy that value to clipboard for use next (and later).  
+    10. If deployment fails, Go to the deployed __App sevice__ -> __Deployment Center__ -> __Logs__. Then __Sync__ to redeploy.
+
+        ![Sync](Wiki/Images/sync.png)
+    11. If Sync fails then We recommend to deploy on P1v2, P2v2, P3v2 (Premium V2 service plans) and after deploying successfully change the plan to S1. 
+    12. Once successfully deployed, get the URL value from the Web API App Service that has been provisioned. Copy that value to clipboard for use next (and later).  
         1. Go to: Home -> Bot Services -> Your Bot -> Channels -> Microsoft Teams (edit) -> Calling tab -> Tick ‘Enable Calling’ -> create Webhook like example here: `https://yourappserviceurl.azurewebsites.net/callback/calling`
         2. Click Save
 

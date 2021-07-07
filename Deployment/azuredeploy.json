@@ -59,6 +59,9 @@
     "sku": {
       "type": "string",
       "allowedValues": [
+        "S1",
+        "S2",
+        "S3",
         "P1v2",
         "P2v2",
         "P3v2",
@@ -303,6 +306,10 @@
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",
               "value": "14.16.0"
+            },
+            {
+              "name": "SCM_COMMAND_IDLE_TIMEOUT",
+              "value": "600"
             }
           ]
         }
