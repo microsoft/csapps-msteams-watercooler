@@ -263,6 +263,7 @@ Alternatively you may follow the steps below:
    3. Change the placeholder fields in the manifest to values appropriate for your organization in developer property.
       1. `MenifestVersion = 1.5`
       2. `Version = 1.0.0`
+      3. `id` = `Client ID`
       3. `developer.name` = Microsoft ([What's this?](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#developer)) 
       4. `developer.websiteUrl`
       5. `developer.privacyUrl`
