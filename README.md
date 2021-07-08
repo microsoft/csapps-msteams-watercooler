@@ -221,7 +221,7 @@ e.g. `api://youappserviceurl.azurewebsites.net/clientId`.
          3. __Calls.InitiateGroupCall.All__
          4. __Calls.JoinGroupCall.All__
          5. __Calls.JoinGroupCallAsGuestAll__
-         6. __OnlineMeetings.ReadWriteAll__
+         6. __OnlineMeetings.ReadWrite.All__
          7. __People.Read.All__
          8. __User.Read.All__
       3. then select __Delegated permissions__ and check the following permissions
@@ -348,6 +348,13 @@ Alternatively you may follow the steps below:
 5. Delete your __UI App service__. We don’t need it anymore.
 6. Create the Teams app package (Follow Deployment process  step 6 above)  
 
+## __Troubleshooting Guidelines__
+
+   1. If deployment fails, Go to the deployed App service -> Deployment centre -> Logs. Then Sync to redeploy.
+     
+      ![Sync](Wiki/Images/sync.png)
+
+   2. If Sync fails then We recommend to deploy on P1v2, P2v2, P3v2 (Premium V2 service plans) and after deploying successfully change the plan to S1. 
 
 ## Feedback
 Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public)!
