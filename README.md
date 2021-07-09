@@ -88,13 +88,10 @@ Please make sure you are ready with the following list:
 1. __Access to [ https://portal.azure.com]( https://portal.azure.com)__
    1. You will need an active subscription with credit available
    2. Note: You will need to create a new Resource Group and be able to deploy Azure Services into it
-2. __Access to Command Prompt (CMD) on a computer with Node.JS installed__
-   1. This is needed to deploy the app code
-   2. (Install Node.JS from here: [ https://nodejs.org/](https://nodejs.org/)
-3. __Access to run PowerShell on your local machine (as Administrator) connecting to a Microsoft Teams Tenant. This is needed to create the Policy allowing the Water Cooler app to make calls inside your tenant.__
+2. __Access to run PowerShell on your local machine (as Administrator) connecting to a Microsoft Teams Tenant. This is needed to create the Policy allowing the Water Cooler app to make calls inside your tenant. Or you can use Azure cloud shell instead of PowerShell on local machine.__
    1. When running the PowerShell your user account will need to have the Teams Administrator Role – or – be Global Administrator.
    2. Learn more: [ Use Microsoft Teams administrator roles to manage Teams](https://docs.microsoft.com/en-us/MicrosoftTeams/using-admin-roles)
-4. __Permissions to submit/approve a Teams App for use in your tenant via the Teams Admin Centre__
+3. __Permissions to submit/approve a Teams App for use in your tenant via the Teams Admin Centre__
    1. This allows users to find and access the app
 
 ### Deployment steps
@@ -185,8 +182,8 @@ Please make sure you are ready with the following list:
 3. __Set-up Authentication__
    1. Go to App Registrations page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) and open the Water Cooler app you created (in Step 1) from the application list.
    2. Under __Manage__, click on __Authentication__ to bring up authentication settings.
-      1. Add a new entry to __Redirect URIs__:
-         1. __Type__: Web
+      1. Click on __Add a Platform__:
+         1. Click `Web`
          2. __Redirect URI__: Enter  `https://%AppServiceUrl%/`auth-end for the URL e.g. `https://yourappserviceurl/auth-end` (app service)
          3. You can find this URL by: Azure -> App Services -> your App Service -> copy URL
       2. Under __Implicit grant__, check __ID tokens__.
@@ -245,14 +242,18 @@ Alternatively you may follow the steps below:
 
 5. __Give policy access to admin user__
    
-   In this step we need to connect as a Teams Administrator (or Global Administrator) to your tenant using PowerShell, and create an Application Access Policy so the user account the Water Cooler runs under can work with Teams properly.
-   1. Open PowerShell as system administrator
+   1. Click on command shell icon on header
+
+      ![Command shell](Wiki/Images/cmdshell.png)
+   2. Run `Update-Module MicrosoftTeams` (To use updated module)
    2. Write below commands to run and provide appropriate details
       1. Import-Module MicrosoftTeams
       2. `$userCredential` = Get-Credential
       3. Connect-MicrosoftTeams -Credential `$userCredential`
       4. New-CsApplicationAccessPolicy -Identity OnlineMeeting-WaterCooler -AppIds `%clientId%` -Description "Water cooler app - Online meeting policy for admin -Tenant"
       5. Grant-CsApplicationAccessPolicy -PolicyName OnlineMeeting-WaterCooler -Identity `%adminUserId%`
+
+         ![PowerShell](Wiki/Images/powershell.png)
 
 6. __Create the Teams app package__
    
