@@ -12,7 +12,7 @@ namespace WaterCoolerAPI.Bot
     /// <summary>
     /// Base class for call handler for event handling, logging and cleanup.
     /// </summary>
-    public class CallHandler : Disposable
+    public class CallHandler : ObjectRootDisposable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CallHandler"/> class.
@@ -20,6 +20,7 @@ namespace WaterCoolerAPI.Bot
         /// <param name="bot">The bot.</param>
         /// <param name="call">The call.</param>
         public CallHandler(Bot bot, ICall call)
+            : base(call?.GraphLogger)
         {
             this.Bot = bot;
             this.Call = call;

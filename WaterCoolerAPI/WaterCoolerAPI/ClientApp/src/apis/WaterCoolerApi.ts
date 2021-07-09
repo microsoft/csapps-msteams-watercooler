@@ -34,7 +34,7 @@ export const getUserList = async (payload: {}): Promise<IGraphResponse> => {
   let graphUrl = graphAPIUrl+ "/users/" + user.oid + "/people/?$search=" + payload;
 
   return fetch(graphUrl, {
-    headers: { "Authorization": `Bearer ${applicationAccessToken.data}` }
+    headers: { "Authorization": `Bearer ${applicationAccessToken.data}`, "X-PeopleQuery-QuerySources": `Mailbox,Directory` }
   }).then(response => response.json());
 }
 

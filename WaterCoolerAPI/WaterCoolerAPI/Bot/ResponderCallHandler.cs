@@ -54,84 +54,41 @@ namespace WaterCoolerAPI.Bot
 
                 if (currentPromptTimes == 1)
                 {
-                    this.SubscribeToTone();
-                    this.PlayNotificationPrompt();
-                }
-
-                if (sender.Resource.ToneInfo?.Tone != null)
-                {
-                    Tone tone = sender.Resource.ToneInfo.Tone.Value;
-
-                    // handle different tones from responder
-                    switch (tone)
-                    {
-                        case Tone.Tone1:
-                            this.PlayTransferingPrompt();
-                            this.TransferToIncidentMeeting();
-                            break;
-                        case Tone.Tone0:
-                        default:
-                            this.PlayNotificationPrompt();
-                            break;
-                    }
-
-                    sender.Resource.ToneInfo.Tone = null;
+                    this.PlayPromptAndTransferToMeeting();
                 }
             }
         }
 
         /// <summary>
-        /// Subscribe to tone.
+        /// Play prompt and transfer to the incident meeting.
         /// </summary>
-        private void SubscribeToTone()
+        private void PlayPromptAndTransferToMeeting()
         {
             Task.Run(async () =>
             {
-                try
-                {
-                    await this.Call.SubscribeToToneAsync().ConfigureAwait(false);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                await this.PlayTransferingPromptAsync().ConfigureAwait(false);
+                this.TransferToIncidentMeeting();
             });
         }
 
         /// <summary>
         /// Play the transfering prompt.
         /// </summary>
-        private void PlayTransferingPrompt()
+        /// <returns>
+        /// A <see cref="Task" /> representing the asynchronous operation.
+        /// </returns>
+        private async Task PlayTransferingPromptAsync()
         {
-            Task.Run(async () =>
+            try
             {
-                try
-                {
-                    await this.Call.PlayPromptAsync(new List<MediaPrompt> { this.Bot.MediaMap[Bot.TransferingPromptName] }).ConfigureAwait(false);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            });
-        }
-
-        /// <summary>
-        /// Play the notification prompt.
-        /// </summary>
-        private void PlayNotificationPrompt()
-        {
-            Task.Run(async () =>
+                await this.Call.PlayPromptAsync(new List<MediaPrompt> { this.Bot.MediaMap[Bot.TransferingPromptName] }).ConfigureAwait(false);
+                this.GraphLogger.Info(Common.Constants.StartedPlayingTransferingPrompt);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    await this.Call.PlayPromptAsync(new List<MediaPrompt> { this.Bot.MediaMap[Bot.NotificationPromptName] }).ConfigureAwait(false);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            });
+                this.GraphLogger.Error(ex, Common.Constants.FailedToPlayTransferingPrompt);
+                throw;
+            }
         }
 
         /// <summary>
@@ -157,9 +114,9 @@ namespace WaterCoolerAPI.Bot
                         await this.Bot.AddParticipantAsync(incidentMeetingCallId, addParticipantRequestData).ConfigureAwait(false);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw;
+                    this.GraphLogger.Error(ex, Common.Constants.FailedToTransferToIncidentMeeting);
                 }
             });
         }

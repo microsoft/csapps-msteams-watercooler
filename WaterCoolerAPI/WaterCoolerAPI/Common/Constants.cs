@@ -258,5 +258,20 @@ namespace WaterCoolerAPI.Common
         /// get the Active Room Data cache key.
         /// </summary>
         public const string ActiveRoomData = "ActiveRoomData";
+
+        /// <summary>
+        /// get the started playing transfering prompt.
+        /// </summary>
+        public const string StartedPlayingTransferingPrompt = "Started playing transfering prompt";
+
+        /// <summary>
+        /// get the failed to play transfering prompt.
+        /// </summary>
+        public const string FailedToPlayTransferingPrompt = "Failed to play transfering prompt";
+
+        /// <summary>
+        /// get the failed to transfer to incident meeting.
+        /// </summary>
+        public const string FailedToTransferToIncidentMeeting = "Failed to transfer to incident meeting";
     }
 }
