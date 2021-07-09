@@ -177,6 +177,11 @@ Please make sure you are ready with the following list:
         2. Click Save
 
            ![Bot Calling](Wiki/Images/botCalling.png)
+
+        3. Click on __Bot Profile__
+        4. __Update Bot icon, name and description__
+           
+           ![Bot Profile](Wiki/Images/botProfile.png)
    
 
 3. __Set-up Authentication__
