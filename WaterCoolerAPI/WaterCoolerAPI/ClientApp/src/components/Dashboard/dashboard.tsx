@@ -7,7 +7,6 @@ import * as WConst from '../../WaterCoolerConstants';
 import { Loader } from '@fluentui/react-northstar';
 import { Input, Button } from '@fluentui/react-northstar';
 import * as microsoftTeams from "@microsoft/teams-js";
-import debounce from "lodash/debounce";
 import { initializeIcons } from '@fluentui/font-icons-mdl2';
 import { Icon } from '@fluentui/react/lib/Icon';
 import RoomPlaceholder from '../../resources/roomPlaceholder.png'
@@ -56,6 +55,13 @@ class dashboard extends React.Component<{}, dashboardState> {
     microsoftTeams.tasks.startTask(taskInfo, submitHandler);
   };
 
+  filterRoom = (event: any) => {
+    this.setState({
+      roomSearchString: event.target.value,
+      filteredRoom: this.state.roomsList.filter(rooms => rooms.name.toLowerCase().includes(event.target.value))
+    });
+  }
+
   render() {
     if (this.state.loader) {
       return (
@@ -75,11 +81,10 @@ class dashboard extends React.Component<{}, dashboardState> {
             <Input className="inputField"
               placeholder={WConst.constants.find}
               autoComplete="off"
-              onChange={debounce((event) =>
-                this.setState({
-                  roomSearchString: event.target.value,
-                  filteredRoom: this.state.roomsList.filter(rooms => rooms.name.toLowerCase().includes(event.target.value))
-                }), 500)}
+              onChange={(event) => {
+                event.persist();
+                this.filterRoom(event);
+              }}
               fluid
             />
             <Icon iconName="Search" className="searchIcon" />
