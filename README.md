@@ -194,8 +194,8 @@ Please make sure you are ready with the following list:
       2. Under __Implicit grant__, check __ID tokens__.
       3. Click __Configure__ to commit your changes.
    3. Back under __Manage__, click on __Expose an API__.
-      1. Click on the __Set__ link next to __Application ID URI__, and change the value to `api://%AppServiceURL%/clientId`, this is the same URL you used in the previous step (but with api not https) see below: 
-e.g. `api://youappserviceurl.azurewebsites.net/clientId`.
+      1. Click on the __Set__ link next to __Application ID URI__, and change the value to `api://%AppServiceURL%/%ClientId%`, this is the same URL you used in the previous step (but with api not https) see below: 
+e.g. `api://youappserviceurl.azurewebsites.net/your-registered-app-id`.
 
       2. Click __Save__ to commit your changes.
       3. Click on __Add a scope__, under __Scopes defined by this API__. In the flyout that appears, enter the following values:
