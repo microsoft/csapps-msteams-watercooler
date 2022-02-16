@@ -160,8 +160,7 @@ Please make sure you are ready with the following list:
        __Note__: Make sure that the values are copied as-is, with no extra spaces. The template checks that GUIDs are exactly 36 
        characters.
 
-       __Note__: If your Azure subscription is in a different tenant than the tenant where you want to install the Teams App, please 
-       update the Tenant Id field with the tenant where you want to install the Teams App.
+       __Note__: Please use single tenant for deployment, app registration and installing the app in Teams.
     6. If you wish to change the app name, description, and icon from the defaults, modify the corresponding template parameters.
     7. Agree to the Azure terms and conditions by clicking on the check box "I agree to the terms and conditions stated above" located at 
        the bottom of the page.
