@@ -160,8 +160,7 @@ Please make sure you are ready with the following list:
        __Note__: Make sure that the values are copied as-is, with no extra spaces. The template checks that GUIDs are exactly 36 
        characters.
 
-       __Note__: If your Azure subscription is in a different tenant than the tenant where you want to install the Teams App, please 
-       update the Tenant Id field with the tenant where you want to install the Teams App.
+       __Note__: Please use single tenant for deployment, app registration and installing the app in Teams.
     6. If you wish to change the app name, description, and icon from the defaults, modify the corresponding template parameters.
     7. Agree to the Azure terms and conditions by clicking on the check box "I agree to the terms and conditions stated above" located at 
        the bottom of the page.
@@ -194,8 +193,8 @@ Please make sure you are ready with the following list:
       2. Under __Implicit grant__, check __ID tokens__.
       3. Click __Configure__ to commit your changes.
    3. Back under __Manage__, click on __Expose an API__.
-      1. Click on the __Set__ link next to __Application ID URI__, and change the value to `api://%AppServiceURL%/clientId`, this is the same URL you used in the previous step (but with api not https) see below: 
-e.g. `api://youappserviceurl.azurewebsites.net/clientId`.
+      1. Click on the __Set__ link next to __Application ID URI__, and change the value to `api://%AppServiceURL%/%ClientId%`, this is the same URL you used in the previous step (but with api not https) see below: 
+e.g. `api://youappserviceurl.azurewebsites.net/your-registered-app-id`.
 
       2. Click __Save__ to commit your changes.
       3. Click on __Add a scope__, under __Scopes defined by this API__. In the flyout that appears, enter the following values:
