@@ -27,7 +27,7 @@
     "msteams-ui-icons-core": "^0.4.2",
     "msteams-ui-icons-react": "^0.4.2",
     "msteams-ui-styles-core": "^0.8.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "normalize-url": "^4.5.1",
     "postcss": "^8.2.10",
     "react": "^16.8.0",
